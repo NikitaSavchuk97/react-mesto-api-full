@@ -1,0 +1,13 @@
+.popup__about {
+    width: 84%;
+
+    margin: 30px auto 0 auto;
+
+    color: #000000;
+}
+
+@media screen and (max-width: 425px) {
+    .popup__about {
+        margin: 30px auto 0 auto;
+    }
+}

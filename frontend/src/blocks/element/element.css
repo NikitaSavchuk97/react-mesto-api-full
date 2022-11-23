@@ -1,0 +1,20 @@
+.element {
+	display: grid;
+	grid-template-columns: 1fr min-content;
+	grid-template-rows: 1fr min-content;
+	grid-template-areas:
+		'photo delete'
+		'title like';
+	align-items: center;
+	text-align: center;
+
+	background-color: #ffffff;
+
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	list-style: none;
+
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+}

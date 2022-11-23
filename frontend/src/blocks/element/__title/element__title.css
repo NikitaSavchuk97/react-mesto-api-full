@@ -1,0 +1,19 @@
+.element__title {
+	grid-area: title;
+	grid-column: 1/2;
+	grid-row: 2/3;
+	text-align: start;
+
+	color: #000000;
+	font-style: normal;
+	font-weight: 900;
+	font-size: 24px;
+	line-height: 29px;
+
+	margin: 25px auto 32px 20px;
+	width: 90%;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

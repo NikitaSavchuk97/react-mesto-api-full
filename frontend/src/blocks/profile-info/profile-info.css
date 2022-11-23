@@ -1,0 +1,26 @@
+.profile-info {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    grid-template-rows: 1fr min-content;
+    grid-template-areas: 
+    'name edit'
+    'title title';
+
+    margin: 0 10px 0 0;
+
+    min-width: 336px;
+    max-width: 450px;
+    min-height: 73px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .profile-info{
+        grid-template-columns: 1fr max-content;
+
+        min-width: 100%;
+        text-align: center;
+        min-height: 40px;
+        margin: 0 0 0 0;
+    }
+}

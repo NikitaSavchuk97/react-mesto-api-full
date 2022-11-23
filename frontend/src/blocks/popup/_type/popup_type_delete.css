@@ -1,0 +1,6 @@
+.popup_type_delete {
+	background-color: rgba(0, 0, 0, 0.5);
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility, 0.2s ease-in-out;
+}

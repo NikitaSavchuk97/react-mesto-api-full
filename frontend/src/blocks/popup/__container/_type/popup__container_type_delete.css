@@ -1,0 +1,7 @@
+.popup__container_type_delete {
+	width: 430px;
+	max-width: 90%;
+	height: 181px;
+
+	position: relative;
+}

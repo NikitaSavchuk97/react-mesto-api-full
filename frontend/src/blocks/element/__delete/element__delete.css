@@ -1,0 +1,26 @@
+.element__delete {
+	grid-area: delete;
+	grid-column: 2/3;
+	grid-row: 1/2;
+
+	visibility: visible;
+	opacity: 1;
+
+	width: 18px;
+	height: 19px;
+
+	background-color: transparent;
+	background-image: url(../../../images/__delete.svg);
+	border: none;
+
+	margin: 25px 20px auto auto;
+	padding: 0;
+
+	cursor: pointer;
+
+	transition: opacity 0.9s ease-in-out;
+}
+
+.element__delete:hover {
+	opacity: 0.6;
+}

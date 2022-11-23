@@ -1,0 +1,26 @@
+.login__submit {
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+
+	width: 100%;
+	min-width: 238px;
+	height: 50px;
+
+	margin: auto auto 10px auto;
+
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 22px;
+	text-align: center;
+
+	background-color: #ffffff;
+	color: #000000;
+}
+
+@media screen and (max-width: 425px) {
+	.login__submit {
+		width: 90%;
+	}
+}

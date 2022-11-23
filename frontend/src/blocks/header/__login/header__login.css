@@ -1,0 +1,17 @@
+.header__login {
+	line-height: 22px;
+	font-size: 18px;
+	color: white;
+	text-decoration: none;
+
+	height: min-content;
+
+	margin: 0 0 auto 0;
+	padding: 0;
+}
+
+@media screen and (max-width: 425px) {
+	.header__login {
+		margin: 0px 10px auto auto
+	}
+}

@@ -1,0 +1,7 @@
+.popup__container_type_avatar {
+	width: 430px;
+	max-width: 90%;
+	height: 272px;
+
+	position: relative;
+}

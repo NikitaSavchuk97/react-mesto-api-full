@@ -1,0 +1,21 @@
+.element__like_active {
+	grid-area: like;
+	grid-column: 2/3;
+	grid-row: 2/3;
+
+	background-color: #ffffff;
+	background-image: url(../../../../images/__like-active.svg);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+
+	margin: 25px 20px auto auto;
+	padding: 0;
+
+	cursor: pointer;
+
+	border: none;
+
+	width: 22px;
+	height: 19px;
+}

@@ -1,0 +1,14 @@
+.element__delete_hidden {
+	grid-area: delete;
+	grid-column: 2/3;
+	grid-row: 1/2;
+
+	visibility: hidden;
+	opacity: 0;
+
+	width: 18px;
+	height: 19px;
+
+	margin: 25px 20px auto auto;
+	padding: 0;
+}

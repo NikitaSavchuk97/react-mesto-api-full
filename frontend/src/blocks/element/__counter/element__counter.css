@@ -1,0 +1,16 @@
+.element__counter {
+	grid-area: like;
+	grid-column: 2/3;
+	grid-row: 2/3;
+
+	text-align: center;
+
+	margin: auto 20px 20px auto;
+	padding: 0;
+
+	width: 22px;
+	height: 19px;
+
+	max-width: 50px;
+	color: black;
+}

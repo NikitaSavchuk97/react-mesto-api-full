@@ -1,0 +1,12 @@
+.header__email {
+	line-height: 22px;
+	font-size: 18px;
+	font-weight: lighter;
+	color: white;
+	text-decoration: none;
+
+	height: min-content;
+
+	margin: 0 25px auto auto;
+	padding: 0;
+}
