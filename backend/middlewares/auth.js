@@ -1,18 +1,27 @@
 const jsonwebtoken = require('jsonwebtoken');
 
+require('dotenv').config();
+
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const AuthError401 = require('../errors/authError');
 
 module.exports = (req, res, next) => {
-  const token = req.cookies.jwt;
+  let token = req.headers.authorization;
 
   if (!token) {
     return next(new AuthError401('Необходима авторизация'));
   }
 
+  token = token.replace(/^Bearer\s+/, '');
+
   let payload;
 
   try {
-    payload = jsonwebtoken.verify(token, 'yandex');
+    payload = jsonwebtoken.verify(
+      token,
+      NODE_ENV === 'production' ? JWT_SECRET : 'b111646aee247940dd9d1cff2ab70f6610b71924af24c6202e09dd00c0d8318c',
+    );
   } catch (err) {
     return next(new AuthError401('Необходима авторизация'));
   }

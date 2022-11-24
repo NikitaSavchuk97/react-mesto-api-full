@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -15,15 +16,17 @@ module.exports.loginUser = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
+        NODE_ENV === 'production' ? JWT_SECRET : 'b111646aee247940dd9d1cff2ab70f6610b71924af24c6202e09dd00c0d8318c',
         { expiresIn: '7d' },
       );
+      /*
       res.cookie(
         'jwt',
         token,
         { maxAge: 3600000 * 24 * 7 },
       );
-      res.send({ token });
+      */
+      res.send({ token, data: user });
     })
     .catch(() => {
       next(new AuthError401('Пользователя с таким email не существует'));
