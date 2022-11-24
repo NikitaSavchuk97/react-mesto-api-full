@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { NODE_ENV, JWT_SECRET } = secret.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const User = require('../models/user');
 const AuthError401 = require('../errors/authError');
@@ -23,7 +23,7 @@ module.exports.loginUser = (req, res, next) => {
         token,
         { maxAge: 3600000 * 24 * 7 },
       );
-      res.status(200).send({ token });
+      res.send({ token });
     })
     .catch(() => {
       next(new AuthError401('Пользователя с таким email не существует'));
