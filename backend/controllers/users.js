@@ -18,21 +18,15 @@ module.exports.loginUser = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
         { expiresIn: '7d' },
       );
-      res
-        .status(
-          200
-        )
-        .cookie(
-          'jwt',
-          token,
-          { maxAge: 3600000 * 24 * 7 },
-        )
-        .send(
-          {
-            name: user.name,
-            email: user.email,
-          }
-        );
+      res.cookie(
+        'jwt',
+        token,
+        { maxAge: 3600000 * 24 * 7 },
+      );
+      res.status(200).send({
+        name: user.name,
+        email: user.email,
+      });
     })
     .catch(() => {
       next(new AuthError401('Пользователя с таким email не существует'));
