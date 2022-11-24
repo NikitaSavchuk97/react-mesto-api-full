@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { NODE_ENV, JWT_SECRET } = secret.env;
+
 const User = require('../models/user');
 const AuthError401 = require('../errors/authError');
 const BadRequestError400 = require('../errors/badRequestError');
@@ -13,8 +15,8 @@ module.exports.loginUser = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'yandex',
-        { expiresIn: 3600 },
+        NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
+        { expiresIn: '7d' },
       );
       res.cookie(
         'jwt',
