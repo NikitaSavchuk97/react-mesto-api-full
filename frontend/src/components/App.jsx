@@ -47,6 +47,15 @@ function App() {
 		setSelectedCard({});
 	};
 
+	function handleSubmitLogin(password, email) {
+		auth.authorization(password, email)
+			.then((res) => {
+				localStorage.setItem('token', res.token)
+				navigate('/')
+			})
+			.catch((err) => console.log(err));
+	}
+
 	useEffect(() => {
 		const token = localStorage.getItem("token");
 		if (token) {
@@ -113,15 +122,6 @@ function App() {
 					}
 				})
 		}
-	}
-
-	function handleSubmitLogin(password, email) {
-		auth.authorization(password, email)
-			.then((res) => {
-				localStorage.setItem('token', res.token)
-				navigate('/')
-			})
-			.catch((err) => console.log(err));
 	}
 
 	function handleCardLike(card) {
