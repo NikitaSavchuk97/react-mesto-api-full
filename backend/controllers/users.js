@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const { NODE_ENV, JWT_SECRET } = secret.env;
+
 const User = require('../models/user');
 const AuthError401 = require('../errors/authError');
 const BadRequestError400 = require('../errors/badRequestError');
@@ -13,18 +15,24 @@ module.exports.loginUser = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        'yandex',
-        { expiresIn: 3600 },
+        NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
+        { expiresIn: '7d' },
       );
-      res.cookie(
-        'jwt',
-        token,
-        { maxAge: 3600000 * 24 * 7 },
-      );
-      res.status(200).send({
-        name: user.name,
-        email: user.email,
-      });
+      res
+        .status(
+          200
+        )
+        .cookie(
+          'jwt',
+          token,
+          { maxAge: 3600000 * 24 * 7 },
+        )
+        .send(
+          {
+            name: user.name,
+            email: user.email,
+          }
+        );
     })
     .catch(() => {
       next(new AuthError401('Пользователя с таким email не существует'));

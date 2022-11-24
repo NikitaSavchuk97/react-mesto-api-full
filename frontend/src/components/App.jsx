@@ -52,6 +52,7 @@ function App() {
 		if (token) {
 			auth.validation(token)
 				.then((res) => {
+					console.log(res.data.email)
 					setUserEmail(res.data.email)
 					setLoggedIn(true);
 					navigate("/");
