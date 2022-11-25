@@ -47,35 +47,6 @@ function App() {
 		setSelectedCard({});
 	};
 
-	function handleSubmitLogin(password, email) {
-		auth.authorization(password, email)
-			.then((res) => {
-				localStorage.setItem('token', res.token)
-				navigate('/')
-			})
-			.catch((err) => console.log(err));
-	}
-
-	useEffect(() => {
-		const token = localStorage.getItem("token");
-		if (token) {
-			auth.validation(token)
-				.then((res) => {
-					setUserEmail(res.data.email)
-					setLoggedIn(true);
-					navigate("/");
-				})
-				.catch(() => {
-					setSuccessOrError(true)
-					setSuccessOrErrorMessage('Не верный пароль или емейл')
-					setSuccessRegistration(true)
-					setTimeout(() => {
-						setSuccessRegistration(false)
-					}, 3000)
-				})
-		}
-	}, [navigate]);
-
 	useEffect(() => {
 		if (loggedIn) {
 			Promise.all([api.getUserInfo(), api.getCards()])
@@ -87,11 +58,45 @@ function App() {
 		}
 	}, [loggedIn]);
 
+	/*
 	function logout() {
 		localStorage.removeItem('token')
 		setUserEmail('')
 		setLoggedIn(false)
 	}
+	*/
+
+	function handleSubmitLogin(password, email) {
+		auth.authorization(password, email)
+			.then((res) => {
+				localStorage.setItem('token', res)
+				navigate('/')
+			})
+			.catch((err) => console.log(err));
+	}
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+
+		if (token) {
+			auth.validation(token)
+				.then((res) => {
+					setUserEmail(res.data.email)
+					setLoggedIn(true);
+
+					navigate("/");
+				})
+				.catch(() => {
+					console.log("я в блоке кэтч")
+					setSuccessOrError(true)
+					setSuccessOrErrorMessage('Неверный пароль или емейл')
+					//setSuccessRegistration(true)
+					setTimeout(() => {
+						setSuccessRegistration(false)
+					}, 3000)
+				})
+		}
+	}, [navigate]);
 
 	function handleSubmitRegistration({ password, email, confirmPassword }) {
 		if (password !== confirmPassword) {
@@ -180,7 +185,7 @@ function App() {
 
 				<Header
 					loggedIn={loggedIn}
-					logout={logout}
+					//logout={logout}
 					userEmail={userEmail}
 				/>
 

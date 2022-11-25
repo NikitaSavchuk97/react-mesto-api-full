@@ -7,13 +7,13 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const AuthError401 = require('../errors/authError');
 
 module.exports = (req, res, next) => {
-  let token = req.headers.authorization;
+  const { authorization } = req.headers;
 
-  if (!token) {
+  if (!authorization) {
     return next(new AuthError401('Необходима авторизация'));
   }
 
-  token = token.replace(/^Bearer\s+/, '');
+  const token = authorization.replace('Bearer', '');
 
   let payload;
 

@@ -6,6 +6,7 @@ class Api {
 
 	getUserInfo() {
 		return fetch(`${this._baseUrl}/users/me`, {
+			method: 'GET',
 			headers: {
 				authorization: this._token,
 				'Content-Type': 'application/json',
@@ -18,7 +19,7 @@ class Api {
 			method: 'PATCH',
 			headers: {
 				authorization: this._token,
-				'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				name: name,

@@ -33,6 +33,11 @@ export const authorization = (password, email) => {
 		.then((resolve) => {
 			return dataServerAnswer(resolve)
 		})
+		.then(data => {
+			if (data.token) {
+				return data.token;
+			}
+		})
 }
 
 export const validation = (token) => {
