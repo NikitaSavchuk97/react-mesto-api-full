@@ -91,7 +91,7 @@ function App() {
 		return auth.authorization(data)
 			.then((res) => {
 				console.log(JSON.stringify(res))
-				localStorage.setItem('jwt', 'yandex')
+				localStorage.setItem('jwt', res.token)
 				navigate('/')
 				return res.token
 			})

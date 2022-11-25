@@ -9,8 +9,6 @@ const AuthError401 = require('../errors/authError');
 module.exports = (req, res, next) => {
   const authToken = req.headers.authorization;
 
-  //console.log(process.env.NODE_ENV);
-
   if (!authToken) {
     return next(new AuthError401('Необходима авторизация'));
   }
@@ -24,7 +22,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jsonwebtoken.verify(
       token,
-      NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
+      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
     );
   } catch (err) {
     return next(new AuthError401('Необходима авторизация'));

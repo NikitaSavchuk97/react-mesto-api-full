@@ -1,26 +1,20 @@
 class Api {
-	constructor({ baseUrl, token }) {
+	constructor({ baseUrl, headers }) {
 		this._baseUrl = baseUrl;
-		this._token = token;
+		this._headers = headers;
 	}
 
 	getUserInfo() {
 		return fetch(`${this._baseUrl}/users/me`, {
 			method: 'GET',
-			headers: {
-				authorization: this._token,
-				'Content-Type': 'application/json',
-			},
+			headers: this._headers,
 		}).then(this._dataServerAnswer)
 	}
 
 	setUserInfo({ name, about }) {
 		return fetch(`${this._baseUrl}/users/me`, {
 			method: 'PATCH',
-			headers: {
-				authorization: this._token,
-				'Content-Type': 'application/json'
-			},
+			headers: this._headers,
 			body: JSON.stringify({
 				name: name,
 				about: about,
@@ -30,20 +24,14 @@ class Api {
 
 	getCards() {
 		return fetch(`${this._baseUrl}/cards`, {
-			headers: {
-				authorization: this._token,
-				'Content-Type': 'application/json',
-			},
+			headers: this._headers,
 		}).then(this._dataServerAnswer)
 	}
 
 	setCard({ name, link }) {
 		return fetch(`${this._baseUrl}/cards`, {
 			method: 'POST',
-			headers: {
-				authorization: this._token,
-				'Content-Type': 'application/json',
-			},
+			headers: this._headers,
 			body: JSON.stringify({
 				name: name,
 				link: link,
@@ -54,37 +42,28 @@ class Api {
 	deleteCard(id) {
 		return fetch(`${this._baseUrl}/cards/${id}`, {
 			method: 'DELETE',
-			headers: {
-				authorization: this._token,
-			},
+			headers: this._headers,
 		}).then(this._dataServerAnswer)
 	}
 
 	likeCard(id) {
 		return fetch(`${this._baseUrl}/cards/likes/${id}`, {
 			method: 'PUT',
-			headers: {
-				authorization: this._token,
-			},
+			headers: this._headers,
 		}).then(this._dataServerAnswer)
 	}
 
 	dislikeCard(id) {
 		return fetch(`${this._baseUrl}/cards/likes/${id}`, {
 			method: 'DELETE',
-			headers: {
-				authorization: this._token,
-			},
+			headers: this._headers,
 		}).then(this._dataServerAnswer)
 	}
 
 	setAvatar({ avatar }) {
 		return fetch(`${this._baseUrl}/users/me/avatar`, {
 			method: 'PATCH',
-			headers: {
-				authorization: this._token,
-				'Content-Type': 'application/json',
-			},
+			headers: this._headers,
 			body: JSON.stringify({
 				avatar: avatar,
 			})
@@ -101,7 +80,10 @@ class Api {
 
 const api = new Api({
 	baseUrl: 'https://api.snv.mesto.nomoredomains.club',
-	token: `Bearer yandex`,
+	headers: {
+		'Content-Type': 'application/json',
+		authorization: `Bearer ${localStorage.getItem('token')}`,
+	},
 })
 
 export default api;
