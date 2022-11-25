@@ -68,7 +68,6 @@ export const validation = (token) => {
 			}
 		})
 		.then((data) => {
-
 			return data;
 		})
 	/*

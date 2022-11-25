@@ -7,29 +7,29 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const AuthError401 = require('../errors/authError');
 
 module.exports = (req, res, next) => {
-	const { authorization } = req.headers;
+  const authToken = req.headers.authorization;
 
-	console.log(authorization);
+  console.log(JWT_SECRET);
 
-	if (!authorization) {
-		return next(new AuthError401('Необходима авторизация'));
-	}
+  if (!authToken) {
+    return next(new AuthError401('Необходима авторизация'));
+  }
 
-	console.log(authorization)
+  console.log(authToken);
 
-	const token = authorization.replace('Bearer', '');
+  const token = authToken.replace('Bearer', '');
 
-	let payload;
+  let payload;
 
-	try {
-		payload = jsonwebtoken.verify(
-			token,
-			NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
-		);
-	} catch (err) {
-		return next(new AuthError401('Необходима авторизация'));
-	}
+  try {
+    payload = jsonwebtoken.verify(
+      token,
+      NODE_ENV === 'production' ? JWT_SECRET : 'yandex',
+    );
+  } catch (err) {
+    return next(new AuthError401('Необходима авторизация'));
+  }
 
-	req.user = payload;
-	return next();
+  req.user = payload;
+  return next();
 };

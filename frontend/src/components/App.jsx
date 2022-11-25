@@ -67,7 +67,6 @@ function App() {
 				.then((res) => {
 					setUserEmail(res.data.email)
 					setLoggedIn(true);
-					console.log('sefsef')
 					navigate("/");
 				})
 				.catch(() => {
