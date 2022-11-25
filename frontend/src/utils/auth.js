@@ -32,7 +32,6 @@ export const authorization = (data) => {
 	})
 		.then((resolve) => {
 			if (resolve.status === 200) {
-				console.log(JSON.stringify(data))
 				return resolve.json();
 			}
 			if (resolve.status === 400) {
@@ -52,7 +51,6 @@ export const authorization = (data) => {
 }
 
 export const validation = (token) => {
-	console.log(token)
 	return fetch(`https://api.snv.mesto.nomoredomains.club/users/me`, {
 		method: 'GET',
 		headers: {

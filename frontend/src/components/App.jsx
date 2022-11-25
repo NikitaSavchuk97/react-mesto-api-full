@@ -88,7 +88,6 @@ function App() {
 	function handleSubmitLogin(data) {
 		return auth.authorization(data)
 			.then((res) => {
-				console.log(JSON.stringify(res))
 				navigate('/')
 				return res.token
 			})
