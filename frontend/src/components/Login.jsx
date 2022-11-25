@@ -14,7 +14,7 @@ function Login({ handleSubmitLogin }) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		handleSubmitLogin(password, email)
+		handleSubmitLogin({ password, email })
 	}
 
 	return (

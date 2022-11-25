@@ -21,22 +21,27 @@ export const registration = (password, email) => {
 		})
 }
 
-export const authorization = (password, email) => {
+export const authorization = (data) => {
+	console.log(data);
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ password, email })
+		body: JSON.stringify(data)
 	})
 		.then((resolve) => {
-			return dataServerAnswer(resolve)
-		})
-		.then(data => {
-			if (data.token) {
-				return data.token;
+			if (resolve.status === 200) {
+				return resolve.json();
 			}
+			if (resolve.status === 400) {
+				throw new Error('Не передано одно из полей');
+			}
+			if (resolve.status === 401) {
+				throw new Error('Пользователь с email не найден');
+			}
+			return dataServerAnswer(resolve)
 		})
 }
 
@@ -49,7 +54,24 @@ export const validation = (token) => {
 			'Authorization': `Bearer ${token}`,
 		},
 	})
-		.then((resolve) => {
-			return dataServerAnswer(resolve)
+		.then((res) => {
+			if (res.status === 200) {
+				console.log("adwwwwwwww")
+				return res.json();
+			}
+			if (res.status === 400) {
+				throw new Error('Токен не передан или передан не в том формате');
+			}
+			if (res.status === 401) {
+				throw new Error('Переданный токен некорректен');
+			}
 		})
+		.then((data) => {
+			return data;
+		})
+	/*
+	.then((resolve) => {
+		return dataServerAnswer(resolve)
+	})
+	*/
 }

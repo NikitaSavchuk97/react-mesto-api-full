@@ -19,7 +19,7 @@ class Api {
 			method: 'PATCH',
 			headers: {
 				authorization: this._token,
-        'Content-Type': 'application/json'
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				name: name,

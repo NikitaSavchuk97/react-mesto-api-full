@@ -32,6 +32,8 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const navigate = useNavigate();
 
+	const token = localStorage.getItem("token");
+
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
 	function handleEditProfileClick() { setIsEditInfoPopupOpen(true) };
@@ -49,14 +51,14 @@ function App() {
 
 	useEffect(() => {
 		if (loggedIn) {
-			Promise.all([api.getUserInfo(), api.getCards()])
+			Promise.all([api.getUserInfo(token), api.getCards(token)])
 				.then(([apiUser, apiCards]) => {
 					setCurrentUser(apiUser)
 					setCards(apiCards)
 				})
 				.catch((err) => console.log(err));
 		}
-	}, [loggedIn]);
+	}, [loggedIn, token]);
 
 	/*
 	function logout() {
@@ -66,28 +68,28 @@ function App() {
 	}
 	*/
 
-	function handleSubmitLogin(password, email) {
-		auth.authorization(password, email)
+	function handleSubmitLogin(data) {
+		auth.authorization(data)
 			.then((res) => {
-				localStorage.setItem('token', res)
+				localStorage.setItem("token", res)
 				navigate('/')
+				return res.token
 			})
 			.catch((err) => console.log(err));
 	}
 
+
 	useEffect(() => {
 		const token = localStorage.getItem("token");
-
 		if (token) {
 			auth.validation(token)
 				.then((res) => {
 					setUserEmail(res.data.email)
 					setLoggedIn(true);
-
+					console.log('sefsef')
 					navigate("/");
 				})
 				.catch(() => {
-					console.log("я в блоке кэтч")
 					setSuccessOrError(true)
 					setSuccessOrErrorMessage('Неверный пароль или емейл')
 					//setSuccessRegistration(true)
