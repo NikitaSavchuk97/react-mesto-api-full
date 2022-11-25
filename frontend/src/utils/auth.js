@@ -43,6 +43,12 @@ export const authorization = (data) => {
 			}
 			return dataServerAnswer(resolve)
 		})
+		.then((data) => {
+			if (data) {
+				localStorage.setItem('jwt', data.token);
+			}
+			return data
+		})
 }
 
 export const validation = (token) => {
