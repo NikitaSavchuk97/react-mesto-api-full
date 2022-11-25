@@ -53,7 +53,7 @@ export const authorization = (data) => {
 
 export const validation = (token) => {
 	console.log(token)
-	return fetch(`${BASE_URL}/users/me`, {
+	return fetch(`https://api.snv.mesto.nomoredomains.club/users/me`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
