@@ -22,17 +22,17 @@ export const registration = (password, email) => {
 }
 
 export const authorization = (data) => {
-	console.log(data);
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data)
+		body: JSON.stringify(data),
 	})
 		.then((resolve) => {
 			if (resolve.status === 200) {
+				console.log(JSON.stringify(data))
 				return resolve.json();
 			}
 			if (resolve.status === 400) {
@@ -46,6 +46,7 @@ export const authorization = (data) => {
 }
 
 export const validation = (token) => {
+	console.log(token)
 	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
 		headers: {
@@ -56,7 +57,7 @@ export const validation = (token) => {
 	})
 		.then((res) => {
 			if (res.status === 200) {
-				console.log("adwwwwwwww")
+				console.log('возвращает!')
 				return res.json();
 			}
 			if (res.status === 400) {
@@ -67,6 +68,7 @@ export const validation = (token) => {
 			}
 		})
 		.then((data) => {
+
 			return data;
 		})
 	/*

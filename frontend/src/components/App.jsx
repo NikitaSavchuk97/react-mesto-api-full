@@ -32,7 +32,7 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const navigate = useNavigate();
 
-	const token = localStorage.getItem("token");
+	const token = localStorage.getItem("jwt");
 
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
@@ -60,27 +60,8 @@ function App() {
 		}
 	}, [loggedIn, token]);
 
-	/*
-	function logout() {
-		localStorage.removeItem('token')
-		setUserEmail('')
-		setLoggedIn(false)
-	}
-	*/
-
-	function handleSubmitLogin(data) {
-		auth.authorization(data)
-			.then((res) => {
-				localStorage.setItem("token", res)
-				navigate('/')
-				return res.token
-			})
-			.catch((err) => console.log(err));
-	}
-
-
 	useEffect(() => {
-		const token = localStorage.getItem("token");
+		const token = localStorage.getItem("jwt");
 		if (token) {
 			auth.validation(token)
 				.then((res) => {
@@ -99,6 +80,24 @@ function App() {
 				})
 		}
 	}, [navigate]);
+
+
+	function logout() {
+		localStorage.removeItem('token')
+		setUserEmail('')
+		setLoggedIn(false)
+	}
+
+	function handleSubmitLogin(data) {
+		return auth.authorization(data)
+			.then((res) => {
+				console.log(JSON.stringify(res))
+				localStorage.setItem('jwt', 'yandex')
+				navigate('/')
+				return res.token
+			})
+			.catch((err) => console.log(err));
+	}
 
 	function handleSubmitRegistration({ password, email, confirmPassword }) {
 		if (password !== confirmPassword) {
@@ -187,7 +186,7 @@ function App() {
 
 				<Header
 					loggedIn={loggedIn}
-					//logout={logout}
+					logout={logout}
 					userEmail={userEmail}
 				/>
 

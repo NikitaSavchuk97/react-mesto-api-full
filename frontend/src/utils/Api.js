@@ -101,7 +101,7 @@ class Api {
 
 const api = new Api({
 	baseUrl: 'https://api.snv.mesto.nomoredomains.club',
-	token: `Bearer ${localStorage.getItem('token')}`,
+	token: `Bearer yandex`,
 })
 
 export default api;
