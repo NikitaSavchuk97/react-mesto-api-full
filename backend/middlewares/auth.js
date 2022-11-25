@@ -9,7 +9,7 @@ const AuthError401 = require('../errors/authError');
 module.exports = (req, res, next) => {
   const authToken = req.headers.authorization;
 
-  console.log(JWT_SECRET);
+  //console.log(process.env.NODE_ENV);
 
   if (!authToken) {
     return next(new AuthError401('Необходима авторизация'));
