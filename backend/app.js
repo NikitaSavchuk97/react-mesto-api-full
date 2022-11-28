@@ -14,8 +14,6 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 const allowedCors = [
-  'https://praktikum.tk',
-  'http://praktikum.tk',
   'localhost:3000',
   'localhost:3001',
   'http://localhost:3000',
@@ -23,6 +21,16 @@ const allowedCors = [
   'https://snv.mesto.nomoredomains.club',
   'http://snv.mesto.nomoredomains.club',
 ];
+
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/*
+app.get('/', (req, res) => {
+  console.log(req.cookies.jwt); // достаём токен
+});
+*/
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -42,16 +50,6 @@ app.use((req, res, next) => {
   }
   return next();
 });
-
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/*
-app.get('/', (req, res) => {
-  console.log(req.cookies.jwt); // достаём токен
-});
-*/
 
 app.use(requestLogger);
 

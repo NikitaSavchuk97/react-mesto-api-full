@@ -96,9 +96,8 @@ function App() {
 			.then((res) => {
 				localStorage.setItem('jwt', res.token)
 				//console.log(localStorage.getItem('jwt'));
-				//setLoggedIn(true)
-				//navigate('/')
-				checkToken()
+				setLoggedIn(true)
+				navigate('/')
 				return res.token
 			})
 			.catch((err) => console.log(err));
