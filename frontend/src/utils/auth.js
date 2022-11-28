@@ -24,7 +24,7 @@ export const registration = (password, email) => {
 export const authorization = (data) => {
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
-		credentials: 'include',
+		//credentials: 'include',
 		headers: {
 			'Content-Type': 'application/json'
 		},
@@ -45,7 +45,7 @@ export const authorization = (data) => {
 }
 
 export const validation = (token) => {
-	return fetch(`https://api.snv.mesto.nomoredomains.club/users/me`, {
+	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
 		credentials: 'include',
 		headers: {
