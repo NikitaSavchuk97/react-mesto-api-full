@@ -1,4 +1,6 @@
-export const BASE_URL = 'https://api.snv.mesto.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3000';
+
+//https://api.snv.mesto.nomoredomains.club
 
 function dataServerAnswer(resolve) {
 	if (resolve.ok) {
@@ -11,7 +13,6 @@ export const registration = (password, email) => {
 	return fetch(`${BASE_URL}/signup`, {
 		method: 'POST',
 		headers: {
-			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({ password, email })
@@ -24,22 +25,12 @@ export const registration = (password, email) => {
 export const authorization = (data) => {
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
-		//credentials: 'include',
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(data),
 	})
 		.then((resolve) => {
-			if (resolve.status === 200) {
-				return resolve.json();
-			}
-			if (resolve.status === 400) {
-				throw new Error('Не передано одно из полей');
-			}
-			if (resolve.status === 401) {
-				throw new Error('Пользователь с email не найден');
-			}
 			return dataServerAnswer(resolve)
 		})
 }
@@ -47,30 +38,12 @@ export const authorization = (data) => {
 export const validation = (token) => {
 	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
-		credentials: 'include',
 		headers: {
 			authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
 	})
-		.then((res) => {
-			if (res.status === 200) {
-				console.log('возвращает!')
-				return res.json();
-			}
-			if (res.status === 400) {
-				throw new Error('Токен не передан или передан не в том формате');
-			}
-			if (res.status === 401) {
-				throw new Error('Переданный токен некорректен');
-			}
+		.then((resolve) => {
+			return dataServerAnswer(resolve)
 		})
-		.then((data) => {
-			return data;
-		})
-	/*
-	.then((resolve) => {
-		return dataServerAnswer(resolve)
-	})
-	*/
 }

@@ -4,10 +4,10 @@ class Api {
 	}
 
 	getUserInfo(token) {
-		return fetch(`${this._baseUrl}/users/me`, {
+		fetch(`${this._baseUrl}/users/me`, {
 			credentials: 'include',
 			headers: {
-				authorization: token,
+				authorization: `Bearer ${token}`,
 			}
 		}).then(this._dataServerAnswer)
 	}
@@ -104,7 +104,9 @@ class Api {
 }
 
 const api = new Api({
-	baseUrl: 'https://api.snv.mesto.nomoredomains.club',
+	baseUrl: 'http://localhost:3000',
 })
+
+//https://api.snv.mesto.nomoredomains.club
 
 export default api;

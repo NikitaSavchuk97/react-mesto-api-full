@@ -34,17 +34,25 @@ function App() {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		checkToken()
 		if (loggedIn) {
+			//console.log(token)
 			Promise.all([api.getUserInfo(token), api.getCards(token)])
 				.then(([apiUser, apiCards]) => {
 					console.log(apiUser)
 					setCurrentUser(apiUser)
 					setCards(apiCards)
+					navigate("/")
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => {
+					console.log("Устал искать что не так")
+					console.log(err)
+				});
 		}
-	}, [loggedIn]);
+	}, [loggedIn, token]);
+
+	useEffect(() => {
+		checkToken()
+	}, [])
 
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
@@ -63,14 +71,13 @@ function App() {
 
 	function checkToken() {
 		const token = localStorage.getItem("jwt");
-		//console.log(token);
 		if (token) {
 			setToken(token)
 			auth.validation(token)
 				.then((res) => {
 					setUserEmail(res.data.email)
 					setLoggedIn(true);
-					navigate("/");
+					//navigate("/");
 					console.log('РАБОТАЕТ')
 				})
 				.catch(() => {
@@ -95,10 +102,8 @@ function App() {
 		return auth.authorization(data)
 			.then((res) => {
 				localStorage.setItem('jwt', res.token)
-				//console.log(localStorage.getItem('jwt'));
 				setLoggedIn(true)
-				navigate('/')
-				return res.token
+				//navigate('/')
 			})
 			.catch((err) => console.log(err));
 	}
