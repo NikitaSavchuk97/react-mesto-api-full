@@ -22,9 +22,11 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*
 app.get('/', (req, res) => {
   console.log(req.cookies.jwt); // достаём токен
 });
+*/
 
 app.use(requestLogger);
 
