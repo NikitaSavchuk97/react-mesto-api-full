@@ -24,8 +24,8 @@ module.exports.loginUser = (req, res, next) => {
 				token,
 				{ maxAge: 3600000 * 24 * 7 },
 			);
-			console.log(res.cookie);
-			res.send({ data: user });
+			//console.log(res.cookie);
+			res.send({ data: user }.json());
 		})
 		.catch(() => {
 			next(new AuthError401('Пользователя с таким email не существует'));
