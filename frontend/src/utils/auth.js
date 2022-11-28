@@ -48,6 +48,7 @@ export const authorization = (data) => {
 export const validation = (token) => {
 	return fetch(`https://api.snv.mesto.nomoredomains.club/users/me`, {
 		method: 'GET',
+		credentials: 'include',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json',
