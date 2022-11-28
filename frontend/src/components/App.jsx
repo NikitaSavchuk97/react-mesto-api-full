@@ -30,7 +30,9 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [userEmail, setUserEmail] = useState('');
 	const [cards, setCards] = useState([]);
+	const [token, setToken] = useState("");
 	const navigate = useNavigate();
+
 
 
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
@@ -49,8 +51,9 @@ function App() {
 	};
 
 	useEffect(() => {
+		checkToken()
 		if (loggedIn) {
-			Promise.all([api.getUserInfo(), api.getCards()])
+			Promise.all([api.getUserInfo(token), api.getCards(token)])
 				.then(([apiUser, apiCards]) => {
 					setCurrentUser(apiUser)
 					setCards(apiCards)
@@ -59,9 +62,11 @@ function App() {
 		}
 	}, [loggedIn]);
 
-	useEffect(() => {
+	function checkToken() {
 		const token = localStorage.getItem("jwt");
+		console.log(token);
 		if (token) {
+			setToken(token)
 			auth.validation(token)
 				.then((res) => {
 					setUserEmail(res.data.email)
@@ -77,7 +82,7 @@ function App() {
 					}, 3000)
 				})
 		}
-	}, [navigate]);
+	};
 
 
 	function logout() {
@@ -92,7 +97,7 @@ function App() {
 				localStorage.setItem('jwt', res.token)
 				//console.log(localStorage.getItem('jwt'));
 				navigate('/')
-				return res.token
+				//return res.token
 			})
 			.catch((err) => console.log(err));
 	}
