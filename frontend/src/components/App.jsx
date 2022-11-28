@@ -90,9 +90,9 @@ function App() {
 		return auth.authorization(data)
 			.then((res) => {
 				localStorage.setItem('jwt', res.token)
-				console.log(res.token);
+				console.log(JSON.stringify(res.token));
 				//navigate('/')
-				return res.token
+				//return res.token
 			})
 			.catch((err) => console.log(err));
 	}
