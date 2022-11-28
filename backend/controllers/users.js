@@ -24,7 +24,6 @@ module.exports.loginUser = (req, res, next) => {
 				token,
 				{ maxAge: 3600000 * 24 * 7 },
 			);
-			//console.log(res.cookie);
 			res.send({ token, data: user });
 		})
 		.catch(() => {
