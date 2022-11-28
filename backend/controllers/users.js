@@ -64,7 +64,6 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUserMe = (req, res, next) => {
-  console.log(req.user._id)
   User.findById(req.user._id)
     .orFail(() => new NotFoundError404('Пользователь по указанному _id не найден'))
     .then((user) => res.status(200).send({ user }))

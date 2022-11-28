@@ -38,6 +38,7 @@ function App() {
 		if (loggedIn) {
 			Promise.all([api.getUserInfo(token), api.getCards(token)])
 				.then(([apiUser, apiCards]) => {
+					console.log(apiUser)
 					setCurrentUser(apiUser)
 					setCards(apiCards)
 				})
@@ -94,9 +95,10 @@ function App() {
 		return auth.authorization(data)
 			.then((res) => {
 				localStorage.setItem('jwt', res.token)
-				console.log(localStorage.getItem('jwt'));
+				//console.log(localStorage.getItem('jwt'));
 				//setLoggedIn(true)
-				navigate('/')
+				//navigate('/')
+				checkToken()
 				return res.token
 			})
 			.catch((err) => console.log(err));
