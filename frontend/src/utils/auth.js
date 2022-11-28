@@ -24,8 +24,8 @@ export const registration = (password, email) => {
 export const authorization = (data) => {
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
+		credentials: 'include',
 		headers: {
-			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(data),
@@ -41,12 +41,6 @@ export const authorization = (data) => {
 				throw new Error('Пользователь с email не найден');
 			}
 			return dataServerAnswer(resolve)
-		})
-		.then((data) => {
-			if (data) {
-				localStorage.setItem('jwt', data.token);
-			}
-			return data
 		})
 }
 

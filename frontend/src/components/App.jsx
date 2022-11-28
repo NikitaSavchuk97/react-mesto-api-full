@@ -32,6 +32,7 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const navigate = useNavigate();
 
+
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
 	function handleEditProfileClick() { setIsEditInfoPopupOpen(true) };
@@ -88,7 +89,9 @@ function App() {
 	function handleSubmitLogin(data) {
 		return auth.authorization(data)
 			.then((res) => {
-				navigate('/')
+				localStorage.setItem('jwt', res.token)
+				console.log(res.token);
+				//navigate('/')
 				return res.token
 			})
 			.catch((err) => console.log(err));

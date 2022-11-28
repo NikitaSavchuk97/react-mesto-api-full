@@ -19,15 +19,13 @@ module.exports.loginUser = (req, res, next) => {
 				NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
 				{ expiresIn: '7d' },
 			);
-			/*
 			res.cookie(
 				'jwt',
 				token,
 				{ maxAge: 3600000 * 24 * 7 },
 			);
-			*/
-			res.send({ token, data: user })
-				.end();
+			console.log(res.cookie);
+			res.send({ token, data: user });
 		})
 		.catch(() => {
 			next(new AuthError401('Пользователя с таким email не существует'));
