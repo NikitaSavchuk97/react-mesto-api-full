@@ -15,7 +15,7 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
 app.use(cors({
-  Origin: 'https://snv.mesto.nomoredomains.club',
+  Origin: 'http://localhost:3000',
 }));
 
 app.use(cookieParser());

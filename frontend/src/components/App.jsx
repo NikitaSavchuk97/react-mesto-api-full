@@ -33,7 +33,17 @@ function App() {
 	const [token, setToken] = useState("");
 	const navigate = useNavigate();
 
-
+	useEffect(() => {
+		checkToken()
+		if (loggedIn) {
+			Promise.all([api.getUserInfo(token), api.getCards(token)])
+				.then(([apiUser, apiCards]) => {
+					setCurrentUser(apiUser)
+					setCards(apiCards)
+				})
+				.catch((err) => console.log(err));
+		}
+	}, [loggedIn]);
 
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
@@ -50,21 +60,9 @@ function App() {
 		setSelectedCard({});
 	};
 
-	useEffect(() => {
-		checkToken()
-		if (loggedIn) {
-			Promise.all([api.getUserInfo(token), api.getCards(token)])
-				.then(([apiUser, apiCards]) => {
-					setCurrentUser(apiUser)
-					setCards(apiCards)
-				})
-				.catch((err) => console.log(err));
-		}
-	}, [loggedIn]);
-
 	function checkToken() {
 		const token = localStorage.getItem("jwt");
-		console.log(token);
+		//console.log(token);
 		if (token) {
 			setToken(token)
 			auth.validation(token)
@@ -72,6 +70,7 @@ function App() {
 					setUserEmail(res.data.email)
 					setLoggedIn(true);
 					navigate("/");
+					console.log('РАБОТАЕТ')
 				})
 				.catch(() => {
 					setSuccessOrError(true)
@@ -95,9 +94,10 @@ function App() {
 		return auth.authorization(data)
 			.then((res) => {
 				localStorage.setItem('jwt', res.token)
-				//console.log(localStorage.getItem('jwt'));
+				console.log(localStorage.getItem('jwt'));
+				//setLoggedIn(true)
 				navigate('/')
-				//return res.token
+				return res.token
 			})
 			.catch((err) => console.log(err));
 	}
