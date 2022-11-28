@@ -7,7 +7,7 @@ class Api {
 		return fetch(`${this._baseUrl}/users/me`, {
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
+				authorization: token,
 			}
 		}).then(this._dataServerAnswer)
 	}
