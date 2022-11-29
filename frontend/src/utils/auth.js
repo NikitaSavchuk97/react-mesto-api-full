@@ -1,5 +1,6 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.snv.mesto.nomoredomains.club';
 
+//http://localhost:3000
 //https://api.snv.mesto.nomoredomains.club
 
 function dataServerAnswer(resolve) {
