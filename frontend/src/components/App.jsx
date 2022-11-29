@@ -32,44 +32,13 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const [token, setToken] = useState("");
 	const navigate = useNavigate();
-	/*
-		useEffect(() => {
-			Promise.all([api.getUserInfo(token), api.getCards(token)])
-				.then(([apiUser, apiCards]) => {
-					setCurrentUser(apiUser)
-					setCards(apiCards)
-					navigate("/")
-				})
-				.catch((err) => {
-					console.log("Устал искать что не так")
-					console.log(err)
-				});
-		}, [loggedIn]);
-	*/
-
 
 	useEffect(() => {
 		if (loggedIn) {
 			api.getUserInfo(token)
 				.then((res) => {
-					//console.log(res)
+					setUserEmail(res.email)
 					setCurrentUser(res)
-					navigate('/')
-				})
-				.catch((err) => {
-					console.log(`Устал искать что не так! Ошибка ${err}`);
-				});
-		}
-	}, [loggedIn, token, navigate]);
-
-
-
-	useEffect(() => {
-		if (!loggedIn) {
-			api.getCards(token)
-				.then((res) => {
-					console.log(res)
-					setCards(res)
 				})
 				.catch((err) => {
 					console.log(`Устал искать что не так! Ошибка ${err}`);
@@ -77,6 +46,17 @@ function App() {
 		}
 	}, [loggedIn, token]);
 
+	useEffect(() => {
+		if (!loggedIn) {
+			api.getCards(token)
+				.then((res) => {
+					setCards(res)
+				})
+				.catch((err) => {
+					console.log(`Устал искать что не так! Ошибка ${err}`);
+				});
+		}
+	}, [loggedIn, token]);
 
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
@@ -132,7 +112,6 @@ function App() {
 				})
 		}
 	};
-
 
 	function handleSubmitRegistration({ password, email, confirmPassword }) {
 		if (password !== confirmPassword) {
