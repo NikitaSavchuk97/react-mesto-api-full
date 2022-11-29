@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -13,42 +14,34 @@ const app = express();
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 
-const allowedCors = [
-  'localhost:3000',
-  'localhost:3001',
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://snv.mesto.nomoredomains.club',
-  'http://snv.mesto.nomoredomains.club',
-];
+const allowedCors = {
+  origin: [
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://localhost:3001',
+    'https://localhost:3001',
+    'http://snv.mesto.nomoredomains.club',
+    'https://snv.mesto.nomoredomains.club',
+    'http://api.snv.mesto.nomoredomains.club',
+    'https://api.snv.mesto.nomoredomains.club',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization', 'cookies'],
+  credentials: true,
+};
+
+app.use('*', cors(allowedCors));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/*
-app.get('/', (req, res) => {
+
+app.get((req, res, next) => {
   console.log(req.cookies.jwt); // достаём токен
-});
-*/
-
-app.use((req, res, next) => {
-  const { origin } = req.headers;
-  if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Credentials', true);
-  }
-
-  const { method } = req;
-  const requestHeaders = req.headers['access-control-request-headers'];
-  const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
-
-  if (method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
-  }
-  return next();
+  next();
 });
 
 app.use(requestLogger);

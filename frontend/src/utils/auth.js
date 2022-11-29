@@ -25,7 +25,9 @@ export const registration = (password, email) => {
 export const authorization = (data) => {
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
+		credentials: "include",
 		headers: {
+			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(data),
@@ -35,15 +37,23 @@ export const authorization = (data) => {
 		})
 }
 
+
+
 export const validation = (token) => {
+
 	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
+		credentials: "include",
 		headers: {
-			authorization: `Bearer ${token}`,
+			Accept: "application/json",
 			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
 		},
+
 	})
 		.then((resolve) => {
 			return dataServerAnswer(resolve)
 		})
+
 }
+

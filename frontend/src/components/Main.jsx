@@ -25,8 +25,8 @@ function Main({ cards, cardClick, avatarClick, profileClick, illustrationClick, 
 			<section className="elements">
 				{
 					cards.map((card) => (
-						<Card
-							card={card}
+
+						< Card card={card}
 							illustrationClick={illustrationClick}
 							onCardLike={likeClick}
 							onCardDelete={deleteClick}
@@ -35,8 +35,16 @@ function Main({ cards, cardClick, avatarClick, profileClick, illustrationClick, 
 					))
 				}
 			</section>
+
 		</main >
 	);
 }
 
 export default Main;
+
+/*
+
+
+
+
+*/

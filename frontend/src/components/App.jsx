@@ -32,13 +32,10 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const [token, setToken] = useState("");
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (loggedIn) {
-			//console.log(token)
+	/*
+		useEffect(() => {
 			Promise.all([api.getUserInfo(token), api.getCards(token)])
 				.then(([apiUser, apiCards]) => {
-					console.log(apiUser)
 					setCurrentUser(apiUser)
 					setCards(apiCards)
 					navigate("/")
@@ -47,12 +44,39 @@ function App() {
 					console.log("Устал искать что не так")
 					console.log(err)
 				});
+		}, [loggedIn]);
+	*/
+
+
+	useEffect(() => {
+		if (loggedIn) {
+			api.getUserInfo(token)
+				.then((res) => {
+					//console.log(res)
+					setCurrentUser(res)
+					navigate('/')
+				})
+				.catch((err) => {
+					console.log(`Устал искать что не так! Ошибка ${err}`);
+				});
+		}
+	}, [loggedIn, token, navigate]);
+
+
+
+	useEffect(() => {
+		if (!loggedIn) {
+			api.getCards(token)
+				.then((res) => {
+					console.log(res)
+					setCards(res)
+				})
+				.catch((err) => {
+					console.log(`Устал искать что не так! Ошибка ${err}`);
+				});
 		}
 	}, [loggedIn, token]);
 
-	useEffect(() => {
-		checkToken()
-	}, [])
 
 	function handleShowIllustrationClick(card) { setSelectedCard(card) };
 	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
@@ -69,16 +93,34 @@ function App() {
 		setSelectedCard({});
 	};
 
+	function logout() {
+		localStorage.removeItem('jwt')
+		setUserEmail('')
+		setLoggedIn(false)
+	}
+
+	function handleSubmitLogin(data) {
+		return auth.authorization(data)
+			.then((res) => {
+				localStorage.setItem('jwt', res.token)
+				//setLoggedIn(true)
+				//setCurrentUser(res.user)
+				//setUserEmail(res.user.email)
+				checkToken()
+				//navigate('/')
+			})
+			.catch((err) => console.log(err));
+	}
+
 	function checkToken() {
-		const token = localStorage.getItem("jwt");
-		if (token) {
-			setToken(token)
+		const tokenLS = localStorage.getItem("jwt");
+		if (tokenLS) {
+			setToken(tokenLS)
 			auth.validation(token)
 				.then((res) => {
-					setUserEmail(res.data.email)
+					//console.log('РАБОТАЕТ')
 					setLoggedIn(true);
-					//navigate("/");
-					console.log('РАБОТАЕТ')
+					navigate("/");
 				})
 				.catch(() => {
 					setSuccessOrError(true)
@@ -91,22 +133,6 @@ function App() {
 		}
 	};
 
-
-	function logout() {
-		localStorage.removeItem('jwt')
-		setUserEmail('')
-		setLoggedIn(false)
-	}
-
-	function handleSubmitLogin(data) {
-		return auth.authorization(data)
-			.then((res) => {
-				localStorage.setItem('jwt', res.token)
-				setLoggedIn(true)
-				//navigate('/')
-			})
-			.catch((err) => console.log(err));
-	}
 
 	function handleSubmitRegistration({ password, email, confirmPassword }) {
 		if (password !== confirmPassword) {

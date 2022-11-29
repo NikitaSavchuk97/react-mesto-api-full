@@ -16,7 +16,7 @@ module.exports.loginUser = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : '5f81d5d1ef4973f5e0bd2e7190b9bb5c659b596cea6b822e03c5ea4ddb4d8a2d',
         { expiresIn: '7d' },
       );
       res.cookie(
@@ -24,7 +24,7 @@ module.exports.loginUser = (req, res, next) => {
         token,
         { maxAge: 3600000 * 24 * 7 },
       );
-      res.send({ token, data: user });
+      res.send({ token, user });
     })
     .catch(() => {
       next(new AuthError401('Пользователя с таким email не существует'));
@@ -66,10 +66,12 @@ module.exports.getUsers = (req, res, next) => {
 module.exports.getUserMe = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => new NotFoundError404('Пользователь по указанному _id не найден'))
-    .then((user) => res.status(200).send(user))
+    .then((items) => res.status(200).send(items))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError400('Переданы некорректные данные'));
+      } else if (err.kind === 'ObjectId') {
+        next(new BadRequestError400('ObjectId! Переданы некорректные данные.'));
       } else {
         next(err);
       }

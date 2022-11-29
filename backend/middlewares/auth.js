@@ -9,7 +9,7 @@ const AuthError401 = require('../errors/authError');
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
-  console.log(req);
+  //console.log(token);
 
   if (!token) {
     return next(new AuthError401('Необходима авторизация'));
@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jsonwebtoken.verify(
       token,
+      // eslint-disable-next-line comma-dangle
       NODE_ENV === 'production' ? JWT_SECRET : '5f81d5d1ef4973f5e0bd2e7190b9bb5c659b596cea6b822e03c5ea4ddb4d8a2d',
     );
   } catch (err) {
@@ -27,5 +28,6 @@ module.exports = (req, res, next) => {
   }
 
   req.user = payload;
+
   return next();
 };

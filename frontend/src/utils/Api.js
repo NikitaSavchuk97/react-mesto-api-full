@@ -4,18 +4,20 @@ class Api {
 	}
 
 	getUserInfo(token) {
-		fetch(`${this._baseUrl}/users/me`, {
+		return fetch(`${this._baseUrl}/users/me`, {
+			method: 'GET',
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
 			}
 		}).then(this._dataServerAnswer)
 	}
 
 	setUserInfo({ name, about }, token) {
 		return fetch(`${this._baseUrl}/users/me`, {
-			credentials: 'include',
 			method: 'PATCH',
+			credentials: 'include',
 			headers: {
 				authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json'
@@ -29,9 +31,11 @@ class Api {
 
 	getCards(token) {
 		return fetch(`${this._baseUrl}/cards`, {
+			method: 'GET',
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
 			}
 		}).then(this._dataServerAnswer)
 	}
