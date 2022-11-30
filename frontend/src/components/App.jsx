@@ -25,14 +25,15 @@ function App() {
 	const [isEditInfoPopupOpen, setIsEditInfoPopupOpen] = useState(false);
 	const [isAddCardPopupOpen, setIsAddCardPopupOpen] = useState(false);
 	const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
-	const [successOrError, setSuccessOrError] = useState(false);
+	const [successOrError, setSuccessOrError] = useState();
 	const [currentUser, setCurrentUser] = useState({});
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [userEmail, setUserEmail] = useState('');
 	const [cards, setCards] = useState([]);
-	const [token, setToken] = useState("");
+	//const [token, setToken] = useState("");
 	const navigate = useNavigate();
 
+	/*
 	useEffect(() => {
 		if (loggedIn) {
 			api.getUserInfo(token)
@@ -47,7 +48,7 @@ function App() {
 	}, [loggedIn, token]);
 
 	useEffect(() => {
-		if (!loggedIn) {
+		if (loggedIn) {
 			api.getCards(token)
 				.then((res) => {
 					setCards(res)
@@ -57,11 +58,40 @@ function App() {
 				});
 		}
 	}, [loggedIn, token]);
+	*/
 
-	function handleShowIllustrationClick(card) { setSelectedCard(card) };
-	function handleEditAvatarClick() { setIsEditAvatarPopupOpen(true) };
-	function handleEditProfileClick() { setIsEditInfoPopupOpen(true) };
-	function handleAddCardClick() { setIsAddCardPopupOpen(true) };
+	useEffect(() => {
+		if (loggedIn) {
+			const token = localStorage.getItem('jwt');
+			if (token) {
+				Promise.all([api.getUserInfo(token), api.getCards(token)])
+					.then(([apiUser, apiCards]) => {
+						setCurrentUser(apiUser);
+						setUserEmail(apiUser.email);
+						setCards(apiCards);
+						navigate('/');
+					})
+					.catch((err) => console.log(err));
+			}
+		}
+	}, [loggedIn, navigate])
+
+	function handleShowIllustrationClick(card) {
+		setSelectedCard(card)
+	};
+
+	function handleEditAvatarClick() {
+		setIsEditAvatarPopupOpen(true)
+	};
+
+	function handleEditProfileClick() {
+		setIsEditInfoPopupOpen(true)
+	};
+
+	function handleAddCardClick() {
+		setIsAddCardPopupOpen(true)
+	};
+
 	//function handleConfirmClick() { setIsConfirmPopupOpen(true) };
 
 	function closeThisPopup() {
@@ -82,30 +112,37 @@ function App() {
 	function handleSubmitLogin(data) {
 		return auth.authorization(data)
 			.then((res) => {
-				localStorage.setItem('jwt', res.token)
-				//setLoggedIn(true)
-				//setCurrentUser(res.user)
-				//setUserEmail(res.user.email)
-				checkToken()
-				//navigate('/')
+				if (typeof (res.token) === 'string') {
+					localStorage.setItem('jwt', res.token)
+					//setLoggedIn(true)
+					//setCurrentUser(res.user)
+					//setUserEmail(res.user.email)
+					checkToken()
+				} else if (res.status === 401 || 400) {
+					setSuccessOrError(true)
+					setSuccessOrErrorMessage('Неверный пароль или емейл')
+					setSuccessRegistration(true)
+					setTimeout(() => {
+						setSuccessRegistration(false)
+					}, 3000)
+				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				console.log(err);
+			});
 	}
 
 	function checkToken() {
-		const tokenLS = localStorage.getItem("jwt");
-		if (tokenLS) {
-			setToken(tokenLS)
+		const token = localStorage.getItem("jwt");
+		if (token) {
 			auth.validation(token)
 				.then((res) => {
-					//console.log('РАБОТАЕТ')
 					setLoggedIn(true);
-					navigate("/");
 				})
 				.catch(() => {
 					setSuccessOrError(true)
-					setSuccessOrErrorMessage('Неверный пароль или емейл')
-					//setSuccessRegistration(true)
+					setSuccessOrErrorMessage('Валидация на сервере не пройдена')
+					setSuccessRegistration(true)
 					setTimeout(() => {
 						setSuccessRegistration(false)
 					}, 3000)
@@ -124,14 +161,7 @@ function App() {
 		} else {
 			auth.registration(password, email)
 				.then((res) => {
-					if (res.status === 400) {
-						setSuccessOrError(true)
-						setSuccessOrErrorMessage('Пользователь с таким емайлом уже зарегистрирован')
-						setSuccessRegistration(true)
-						setTimeout(() => {
-							setSuccessRegistration(false)
-						}, 3000)
-					} else if (password === confirmPassword) {
+					if (res.name === 'Жак-Ив Кусто' && password === confirmPassword) {
 						setSuccessOrError(false)
 						setSuccessOrErrorMessage('Вы успешно зарегистрировались')
 						setSuccessRegistration(true)
@@ -139,7 +169,17 @@ function App() {
 							setSuccessRegistration(false)
 						}, 3000)
 						navigate('/sign-in')
+					} else if (res.status === 400 || 409) {
+						setSuccessOrError(true)
+						setSuccessOrErrorMessage('Пользователь с таким емайлом уже зарегистрирован')
+						setSuccessRegistration(true)
+						setTimeout(() => {
+							setSuccessRegistration(false)
+						}, 3000)
 					}
+				})
+				.catch((err) => {
+					console.log(err)
 				})
 		}
 	}

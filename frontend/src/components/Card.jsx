@@ -5,7 +5,7 @@ function Card({ card, illustrationClick, onCardLike, onCardDelete }) {
 
 	const currentUser = useContext(CurrentUserContext);
 
-	const isOwn = card.owner._id === currentUser._id;
+	const isOwn = card.owner === currentUser._id;
 	const cardDeleteButtonClassName = `
 	${isOwn ?
 			'element__delete'
@@ -22,7 +22,7 @@ function Card({ card, illustrationClick, onCardLike, onCardDelete }) {
 			'element__like'
 		}
 	`
-	
+
 	function handleIllustrationClick() {
 		illustrationClick(card)
 	}

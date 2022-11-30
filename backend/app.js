@@ -38,12 +38,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-app.get((req, res, next) => {
-  console.log(req.cookies.jwt); // достаём токен
-  next();
-});
-
 app.use(requestLogger);
 
 app.get('/crash-test', () => {

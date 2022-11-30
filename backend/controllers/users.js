@@ -16,7 +16,7 @@ module.exports.loginUser = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : '5f81d5d1ef4973f5e0bd2e7190b9bb5c659b596cea6b822e03c5ea4ddb4d8a2d',
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
       res.cookie(
@@ -27,7 +27,7 @@ module.exports.loginUser = (req, res, next) => {
       res.send({ token, user });
     })
     .catch(() => {
-      next(new AuthError401('Пользователя с таким email не существует'));
+      next(new AuthError401('Неправильные почта или пароль 3'));
     });
 };
 

@@ -38,10 +38,7 @@ export const authorization = (data) => {
 		})
 }
 
-
-
 export const validation = (token) => {
-
 	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
 		credentials: "include",
@@ -50,11 +47,9 @@ export const validation = (token) => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
-
 	})
 		.then((resolve) => {
 			return dataServerAnswer(resolve)
 		})
-
 }
 
