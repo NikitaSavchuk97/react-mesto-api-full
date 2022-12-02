@@ -187,12 +187,12 @@ function App() {
 	}
 
 	function handleCardLike(card) {
-		const isLiked = card.likes.some(i => i._id === currentUser._id);
+		const isLiked = card.likes.some(i => i === currentUser._id);
 		let apiMethod;
 		if (!isLiked) {
-			apiMethod = api.likeCard(card._id, !isLiked)
+			apiMethod = api.likeCard(card._id, token)
 		} else {
-			apiMethod = api.dislikeCard(card._id, !isLiked)
+			apiMethod = api.dislikeCard(card._id, token)
 		}
 		apiMethod
 			.then((newCard) => {
@@ -219,7 +219,6 @@ function App() {
 	}
 
 	function handleUpdateAvatar({ avatar }) {
-		//const token = localStorage.getItem('jwt');
 		api.setAvatar(avatar, token)
 			.then((res) => {
 				setCurrentUser(res)

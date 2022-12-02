@@ -45,15 +45,10 @@ module.exports.deleteCardById = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
-	Card.findByIdAndUpdate(
-		req.params.cardId,
-		{ $addToSet: { likes: req.user._id } },
-		{
-			new: true,
-		},
-	)
+	console.log(req.user._id);
+	Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
 		.orFail(() => new NotFoundError404('Карточка по указанному _id не найден'))
-		.then((card) => res.send({ data: card }))
+		.then((card) => res.send(card))
 		.catch((err) => {
 			if (err.name === 'CastError') {
 				next(new BadRequestError400('Карточки с таким _id не существует'));
@@ -64,13 +59,9 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
-	Card.findByIdAndUpdate(
-		req.params.cardId,
-		{ $pull: { likes: req.user._id } },
-		{ new: true },
-	)
+	Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
 		.orFail(() => new NotFoundError404('Карточка по указанному _id не найден'))
-		.then((card) => res.send({ data: card }))
+		.then((card) => res.send(card))
 		.catch((err) => {
 			if (err.name === 'CastError') {
 				next(new BadRequestError400('Карточки с таким _id не существует'));
