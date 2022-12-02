@@ -45,7 +45,6 @@ module.exports.deleteCardById = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
-	console.log(req.user._id);
 	Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
 		.orFail(() => new NotFoundError404('Карточка по указанному _id не найден'))
 		.then((card) => res.send(card))
