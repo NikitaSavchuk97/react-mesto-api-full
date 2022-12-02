@@ -30,7 +30,7 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [userEmail, setUserEmail] = useState('');
 	const [cards, setCards] = useState([]);
-	//const [token, setToken] = useState("");
+	const [token, setToken] = useState("");
 	const navigate = useNavigate();
 
 	/*
@@ -62,19 +62,20 @@ function App() {
 
 	useEffect(() => {
 		if (loggedIn) {
-			const token = localStorage.getItem('jwt');
+			//const token = localStorage.getItem('jwt');
+			setToken(localStorage.getItem('jwt'))
 			if (token) {
 				Promise.all([api.getUserInfo(token), api.getCards(token)])
 					.then(([apiUser, apiCards]) => {
 						setCurrentUser(apiUser);
 						setUserEmail(apiUser.email);
-						setCards(apiCards);
+						setCards(apiCards.reverse());
 						navigate('/');
 					})
 					.catch((err) => console.log(err));
 			}
 		}
-	}, [loggedIn, navigate])
+	}, [loggedIn, navigate, token])
 
 	function handleShowIllustrationClick(card) {
 		setSelectedCard(card)
@@ -109,11 +110,12 @@ function App() {
 		setLoggedIn(false)
 	}
 
-	function handleSubmitLogin(data) {
-		return auth.authorization(data)
+	function handleSubmitLogin({ password, email }) {
+		return auth.authorization(password, email)
 			.then((res) => {
 				if (typeof (res.token) === 'string') {
 					localStorage.setItem('jwt', res.token)
+					//setToken(localStorage.getItem('jwt'));
 					//setLoggedIn(true)
 					//setCurrentUser(res.user)
 					//setUserEmail(res.user.email)
@@ -133,10 +135,10 @@ function App() {
 	}
 
 	function checkToken() {
-		const token = localStorage.getItem("jwt");
+		const token = localStorage.getItem("jwt")
 		if (token) {
 			auth.validation(token)
-				.then((res) => {
+				.then(() => {
 					setLoggedIn(true);
 				})
 				.catch(() => {
@@ -207,8 +209,8 @@ function App() {
 			.catch((err) => console.log(err))
 	}
 
-	function handleUpdateUser(data) {
-		api.setUserInfo(data)
+	function handleUpdateUser({ name, about }) {
+		api.setUserInfo(name, about, token)
 			.then((res) => {
 				setCurrentUser(res)
 				closeThisPopup()
@@ -216,8 +218,9 @@ function App() {
 			.catch((err) => console.log(err))
 	}
 
-	function handleUpdateAvatar(data) {
-		api.setAvatar(data)
+	function handleUpdateAvatar({ avatar }) {
+		//const token = localStorage.getItem('jwt');
+		api.setAvatar(avatar, token)
 			.then((res) => {
 				setCurrentUser(res)
 				closeThisPopup()
@@ -225,8 +228,8 @@ function App() {
 			.catch((err) => console.log(err))
 	}
 
-	function handleAddNewCard(data) {
-		api.setCard(data)
+	function handleAddNewCard({ name, link }) {
+		api.setCard(name, link, token)
 			.then((res) => {
 				setCards([res, ...cards])
 				closeThisPopup()

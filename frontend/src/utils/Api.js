@@ -14,7 +14,7 @@ class Api {
 		}).then(this._dataServerAnswer)
 	}
 
-	setUserInfo({ name, about }, token) {
+	setUserInfo(name, about, token) {
 		return fetch(`${this._baseUrl}/users/me`, {
 			method: 'PATCH',
 			credentials: 'include',
@@ -40,7 +40,7 @@ class Api {
 		}).then(this._dataServerAnswer)
 	}
 
-	setCard({ name, link, token }) {
+	setCard(name, link, token) {
 		return fetch(`${this._baseUrl}/cards`, {
 			method: 'POST',
 			credentials: 'include',
@@ -108,7 +108,7 @@ class Api {
 }
 
 const api = new Api({
-	baseUrl: 'https://api.snv.mesto.nomoredomains.club',
+	baseUrl: 'http://localhost:3000',
 })
 
 //http://localhost:3000

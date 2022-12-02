@@ -10,3 +10,9 @@
 	margin: 0 25px auto auto;
 	padding: 0;
 }
+
+@media screen and (max-width: 650px) {
+	.header__email {
+		display: none;
+	}
+}

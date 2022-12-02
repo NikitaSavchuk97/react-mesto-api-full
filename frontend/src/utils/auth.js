@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.snv.mesto.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3000';
 
 //http://localhost:3000
 //https://api.snv.mesto.nomoredomains.club
@@ -23,7 +23,7 @@ export const registration = (password, email) => {
 		})
 }
 
-export const authorization = (data) => {
+export const authorization = (password, email) => {
 	return fetch(`${BASE_URL}/signin`, {
 		method: 'POST',
 		credentials: "include",
@@ -31,7 +31,7 @@ export const authorization = (data) => {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(data),
+		body: JSON.stringify({ password, email }),
 	})
 		.then((resolve) => {
 			return dataServerAnswer(resolve)

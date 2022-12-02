@@ -95,19 +95,9 @@ module.exports.getUserById = (req, res, next) => {
 module.exports.updateUserById = (req, res, next) => {
   const owner = req.user._id;
   const { name, about } = req.body;
-  User.findByIdAndUpdate(
-    owner,
-    {
-      name,
-      about,
-    },
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
+  User.findByIdAndUpdate(owner, { name, about }, { new: true, runValidators: true })
     .orFail(() => new NotFoundError404('Пользователь по указанному _id не найден'))
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError400('Некорректные данные для обновления информации'));
@@ -120,17 +110,8 @@ module.exports.updateUserById = (req, res, next) => {
 module.exports.updateAvatarById = (req, res, next) => {
   const owner = req.user._id;
   const { avatar } = req.body;
-  User.findByIdAndUpdate(
-    owner,
-    {
-      avatar,
-    },
-    {
-      new: true,
-      runValidators: true,
-    },
-  )
-    .then((user) => res.send({ data: user }))
+  User.findByIdAndUpdate(owner, { avatar }, { new: true, runValidators: true })
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new BadRequestError400('Некорректные данные для обновления аватара'));
