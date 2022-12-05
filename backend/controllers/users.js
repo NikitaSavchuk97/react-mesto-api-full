@@ -24,7 +24,7 @@ module.exports.loginUser = (req, res, next) => {
         token,
         { maxAge: 3600000 * 24 * 7 },
       );
-      res.send({ token, user });
+      res.send({ message: `Выполнен вход в аккаунт ${user.email}` });
     })
     .catch(() => {
       next(new AuthError401('Неправильные почта или пароль 3'));
