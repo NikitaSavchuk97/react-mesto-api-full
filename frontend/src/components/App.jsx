@@ -25,6 +25,7 @@ function App() {
 	const [isEditInfoPopupOpen, setIsEditInfoPopupOpen] = useState(false);
 	const [isAddCardPopupOpen, setIsAddCardPopupOpen] = useState(false);
 	const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+	const [idCardToDelete, setIdCardToDelete] = useState("");
 	const [successOrError, setSuccessOrError] = useState();
 	const [currentUser, setCurrentUser] = useState({});
 	const [loggedIn, setLoggedIn] = useState(false);
@@ -201,10 +202,10 @@ function App() {
 			.catch((err) => console.log(err))
 	}
 
-	function handleCardDelete(card) {
-		api.deleteCard(card._id)
+	function handleCardDelete() {
+		api.deleteCard(idCardToDelete)
 			.then(() => {
-				setCards((res) => (res.filter((item) => item._id !== card._id)))
+				setCards((res) => (res.filter((item) => item._id !== idCardToDelete)))
 			})
 			.catch((err) => console.log(err))
 	}
@@ -254,7 +255,8 @@ function App() {
 								<Main
 									cards={cards}
 									likeClick={handleCardLike}
-									deleteClick={handleCardDelete}
+									onConfirmOpen={setIsConfirmPopupOpen}
+									onConfirm={setIdCardToDelete}
 									cardClick={handleAddCardClick}
 									avatarClick={handleEditAvatarClick}
 									profileClick={handleEditProfileClick}
@@ -312,6 +314,7 @@ function App() {
 				/>
 
 				<PopupTypeConfirm
+					deleteClick={handleCardDelete}
 					open={isConfirmPopupOpen}
 					close={closeThisPopup}
 				/>

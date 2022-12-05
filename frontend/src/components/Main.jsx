@@ -2,7 +2,7 @@ import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
-function Main({ cards, cardClick, avatarClick, profileClick, illustrationClick, likeClick, deleteClick }) {
+function Main({ cards, cardClick, avatarClick, profileClick, illustrationClick, likeClick, onConfirm, onConfirmOpen }) {
 
 	const currentUser = useContext(CurrentUserContext);
 
@@ -29,7 +29,8 @@ function Main({ cards, cardClick, avatarClick, profileClick, illustrationClick, 
 						< Card card={card}
 							illustrationClick={illustrationClick}
 							onCardLike={likeClick}
-							onCardDelete={deleteClick}
+							onConfirmOpen={onConfirmOpen}
+							onConfirm={onConfirm}
 							key={card._id}
 						/>
 					))

@@ -13,7 +13,7 @@ const templateSelector = '.template-item';
 
 const profileAvatar = document.querySelector('.profile__avatar');
 const profileAvatarEditBtn = document.querySelector('.profile__edit-btn');
-const profileInfoEditBtn = document.querySelector('.profile-info__edit-button');
+const profileInfoEditBtn = document.querySelector('.profile-info__edit-button');z
 const profileAddPhotoBtn = document.querySelector('.add-button');
 
 const popupAvatar = document.querySelector('.popup_type_avatar');
