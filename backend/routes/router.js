@@ -15,11 +15,11 @@ router.use(routerUsers);
 router.use(routerCards);
 
 router.get('/signout', (req, res) => {
-	res.clearCookie('jwt').send({ message: 'Выход' });
+  res.clearCookie('jwt').send({ message: 'Выход' });
 });
 
 router.use((req, res, next) => {
-	next(new NotFoundError('Запрашиваемая страница не существует'));
+  next(new NotFoundError('Запрашиваемая страница не существует'));
 });
 
 module.exports = router;
