@@ -1,7 +1,7 @@
 .profile__edit-btn {
 	position: absolute;
 
-	border: none;
+	border: 30px;
 	border-radius: 50%;
 
 	cursor: pointer;
@@ -25,4 +25,5 @@
 
 .profile__edit-btn:hover {
 	opacity: 1;
+	border: 1px solid white;
 }
