@@ -114,6 +114,7 @@ function App() {
 	function handleSubmitLogin({ password, email }) {
 		return auth.authorization(password, email)
 			.then((res) => {
+				console.log(res.token);
 				if (typeof (res.token) === 'string') {
 					localStorage.setItem('jwt', res.token)
 					//setToken(localStorage.getItem('jwt'));
