@@ -248,7 +248,17 @@ function App() {
 				/>
 
 				<Routes>
+
 					<Route
+						exact
+						path="*"
+						element={
+							loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
+						}
+					/>
+
+					<Route
+						exact
 						path="/"
 						element={
 							<ProtectedRoute loggiedIn={loggedIn}>
@@ -284,13 +294,6 @@ function App() {
 						}
 					/>
 
-					<Route
-						exact
-						path="*"
-						element={
-							loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
-						}
-					/>
 				</Routes>
 
 				<Footer />
