@@ -4,9 +4,15 @@
 
 	margin: 0 auto 41px 0;
 
+	transition: opacity 0.3s ease-in-out;
+
 	background-image: url(../../../images/__logo.svg);
 	background-repeat: no-repeat;
 	background-size: contain;
+}
+
+.header__logo:hover {
+	opacity: 0.6;
 }
 
 @media screen and (max-width: 425px) {
