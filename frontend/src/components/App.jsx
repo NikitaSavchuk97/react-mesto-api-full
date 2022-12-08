@@ -220,6 +220,8 @@ function App() {
 	}
 
 	function handleUpdateAvatar({ avatar }) {
+
+
 		api.setAvatar(avatar, token)
 			.then((res) => {
 				setCurrentUser(res)

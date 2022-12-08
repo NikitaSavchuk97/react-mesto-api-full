@@ -5,7 +5,8 @@ function Header({ loggedIn, logout, userEmail }) {
 
 	return (
 		<header className="header">
-			<div className="header__logo"></div>
+			<a className="header__logo" href="https://snv.mesto.nomoredomains.club"></a>
+
 			<h3 className="header__email">{userEmail}</h3>
 			<Routes >
 				<Route
@@ -35,7 +36,7 @@ function Header({ loggedIn, logout, userEmail }) {
 					path='/sign-in'
 					element={
 						<Link to='/sign-up' className='header__login'>
-							Регистрироваться
+							Зарегистрироваться
 						</Link>
 					}
 				/>

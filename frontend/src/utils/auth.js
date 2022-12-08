@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.snv.mesto.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3000';
 
 //http://localhost:3000
 //https://api.snv.mesto.nomoredomains.club

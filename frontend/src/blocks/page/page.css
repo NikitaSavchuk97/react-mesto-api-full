@@ -23,6 +23,7 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+/*
 @media screen and (max-width: 425px) {
 	.page {
 		min-height: 83vh;
@@ -30,7 +31,7 @@
 	}
 }
 
-/*
+
 div, p, a, title, header, h1, h2, h3, h4, footer, img, section, form, input, button
 
  * {
