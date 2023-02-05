@@ -108,7 +108,7 @@ class Api {
 }
 
 const api = new Api({
-	baseUrl: 'https://api.snv.mesto.nomoredomains.club',
+	baseUrl: 'https://api-snv-project-mesto.ru',
 })
 
 //http://localhost:3000

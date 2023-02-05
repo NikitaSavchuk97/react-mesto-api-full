@@ -64,7 +64,7 @@ function App() {
 	useEffect(() => {
 		if (loggedIn) {
 			//const token = localStorage.getItem('jwt');
-			setToken(localStorage.getItem('jwt'))
+			setToken(localStorage.getItem('jwt'));
 			if (token) {
 				Promise.all([api.getUserInfo(token), api.getCards(token)])
 					.then(([apiUser, apiCards]) => {
