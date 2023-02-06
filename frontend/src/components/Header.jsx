@@ -5,7 +5,7 @@ function Header({ loggedIn, logout, userEmail }) {
 
 	return (
 		<header className="header">
-			<a className="header__logo" href="https://snv.mesto.nomoredomains.club"></a>
+			<a className="header__logo" href="https://snv-project-mesto.ru"></a>
 
 			<h3 className="header__email">{userEmail}</h3>
 			<Routes >

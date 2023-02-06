@@ -28,7 +28,7 @@ function App() {
 	const [idCardToDelete, setIdCardToDelete] = useState("");
 	const [successOrError, setSuccessOrError] = useState();
 	const [currentUser, setCurrentUser] = useState({});
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(true);
 	const [userEmail, setUserEmail] = useState('');
 	const [cards, setCards] = useState([]);
 	const [token, setToken] = useState("");
@@ -63,8 +63,8 @@ function App() {
 
 	useEffect(() => {
 		if (loggedIn) {
-			//const token = localStorage.getItem('jwt');
-			setToken(localStorage.getItem('jwt'));
+			const token = localStorage.getItem('jwt');
+			//setToken(localStorage.getItem('jwt'));
 			if (token) {
 				Promise.all([api.getUserInfo(token), api.getCards(token)])
 					.then(([apiUser, apiCards]) => {
@@ -76,7 +76,7 @@ function App() {
 					.catch((err) => console.log(err));
 			}
 		}
-	}, [loggedIn, navigate, token])
+	}, [navigate, loggedIn, token])
 
 	function handleShowIllustrationClick(card) {
 		setSelectedCard(card)
@@ -107,6 +107,7 @@ function App() {
 
 	function logout() {
 		localStorage.removeItem('jwt')
+
 		setUserEmail('')
 		setLoggedIn(false)
 	}
@@ -139,7 +140,10 @@ function App() {
 		const token = localStorage.getItem("jwt")
 		if (token) {
 			auth.validation(token)
-				.then(() => {
+				.then((user) => {
+					console.log(user)
+					setCurrentUser(user)
+					//setToken(token)
 					setLoggedIn(true);
 				})
 				.catch(() => {
