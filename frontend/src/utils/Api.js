@@ -112,6 +112,6 @@ const api = new Api({
 })
 
 //http://localhost:3000
-//https://api.snv.mesto.nomoredomains.club
+//https://api-snv-project-mesto.ru
 
 export default api;

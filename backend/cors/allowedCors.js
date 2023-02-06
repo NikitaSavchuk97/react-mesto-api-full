@@ -5,7 +5,7 @@ const allowedCors = {
     'http://localhost:3001',
     'https://localhost:3001',
     'http://snv-project-mesto.ru',
-    'https://api-snv-project-mesto.ru',
+    'https://snv-project-mesto.ru',
     'http://api-snv-project-mesto.ru',
     'https://api-snv-project-mesto.ru',
   ],

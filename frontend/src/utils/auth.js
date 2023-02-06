@@ -1,7 +1,7 @@
 export const BASE_URL = 'https://api-snv-project-mesto.ru';
 
 //http://localhost:3000
-//https://api.snv.mesto.nomoredomains.club
+//https://api-snv-project-mesto.ru
 
 function dataServerAnswer(resolve) {
 	if (resolve.ok) {
