@@ -25,12 +25,14 @@ function Login({ handleSubmitLogin }) {
 				className="login__input"
 				type="email"
 				placeholder="емейл"
+				autoComplete="on"
 			/>
 			<input
 				onChange={handlePasswordChange}
 				className="login__input"
 				type="password"
 				placeholder="пароль"
+				autoComplete="on"
 			/>
 			<button className="login__submit" type="submit">
 				Войти

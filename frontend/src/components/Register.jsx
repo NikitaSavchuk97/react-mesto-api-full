@@ -31,18 +31,21 @@ function Register({ handleSubmitRegistration }) {
 				className="login__input"
 				type="email"
 				placeholder="емейл"
+				autoComplete="on"
 			/>
 			<input
 				onChange={handlePasswordChange}
 				className="login__input"
 				type="password"
 				placeholder="пароль"
+				autoComplete="on"
 			/>
 			<input
 				onChange={handleConfirmPasswordChange}
 				className="login__input"
 				type="password"
 				placeholder="повторите пароль"
+				autoComplete="on"
 			/>
 			<button className="login__submit" type="submit">Зарегистрироваться</button>
 		</form >
