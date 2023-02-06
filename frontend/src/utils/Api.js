@@ -29,6 +29,20 @@ class Api {
 		}).then(this._dataServerAnswer)
 	}
 
+	setAvatar(avatar, token) {
+		return fetch(`${this._baseUrl}/users/me/avatar`, {
+			method: 'PATCH',
+			credentials: 'include',
+			headers: {
+				authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				avatar: avatar,
+			})
+		}).then(this._dataServerAnswer)
+	}
+
 	getCards(token) {
 		return fetch(`${this._baseUrl}/cards`, {
 			method: 'GET',
@@ -82,20 +96,6 @@ class Api {
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
-		}).then(this._dataServerAnswer)
-	}
-
-	setAvatar(avatar, token) {
-		return fetch(`${this._baseUrl}/users/me/avatar`, {
-			method: 'PATCH',
-			credentials: 'include',
-			headers: {
-				authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				avatar: avatar,
-			})
 		}).then(this._dataServerAnswer)
 	}
 

@@ -141,9 +141,9 @@ function App() {
 		if (token) {
 			auth.validation(token)
 				.then((user) => {
-					console.log(user)
+					//console.log(user)
 					setCurrentUser(user)
-					//setToken(token)
+					setToken(token)
 					setLoggedIn(true);
 				})
 				.catch(() => {
