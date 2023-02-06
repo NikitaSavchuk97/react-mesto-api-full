@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
   // console.log(token);
 
   if (!token) {
-    return next(new AuthError401('Необходима авторизация'));
+    return next(new AuthError401('Необходима авторизация 1'));
   }
 
   let payload;
@@ -24,7 +24,7 @@ module.exports = (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
     );
   } catch (err) {
-    return next(new AuthError401('Необходима авторизация'));
+    return next(new AuthError401('Необходима авторизация 2'));
   }
 
   req.user = payload;
