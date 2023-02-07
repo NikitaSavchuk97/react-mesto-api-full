@@ -28,11 +28,11 @@ function App() {
 	const [idCardToDelete, setIdCardToDelete] = useState("");
 	const [successOrError, setSuccessOrError] = useState();
 	const [currentUser, setCurrentUser] = useState({});
-	const [loggedIn, setLoggedIn] = useState(true);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const [userEmail, setUserEmail] = useState('');
 	const [cards, setCards] = useState([]);
-	const [token, setToken] = useState("");
 	const navigate = useNavigate();
+
 
 	/*
 	useEffect(() => {
@@ -59,24 +59,27 @@ function App() {
 				});
 		}
 	}, [loggedIn, token]);
-	*/
+
+*/
+	useEffect(() => {
+		const token = localStorage.getItem("jwt")
+		if (loggedIn) {
+			Promise.all([api.getUserInfo(token), api.getCards(token)])
+				.then(([user, cards]) => {
+					setCurrentUser(user);
+					setUserEmail(user.email);
+					setCards(cards.reverse());
+					navigate('/');
+				})
+				.catch((err) => console.log(err));
+
+		}
+	}, [loggedIn])
 
 	useEffect(() => {
-		if (loggedIn) {
-			const token = localStorage.getItem('jwt');
-			//setToken(localStorage.getItem('jwt'));
-			if (token) {
-				Promise.all([api.getUserInfo(token), api.getCards(token)])
-					.then(([apiUser, apiCards]) => {
-						setCurrentUser(apiUser);
-						setUserEmail(apiUser.email);
-						setCards(apiCards.reverse());
-						navigate('/');
-					})
-					.catch((err) => console.log(err));
-			}
-		}
-	}, [navigate, loggedIn, token])
+		checkToken();
+	}, []);
+
 
 	function handleShowIllustrationClick(card) {
 		setSelectedCard(card)
@@ -117,11 +120,10 @@ function App() {
 			.then((res) => {
 				if (typeof (res.token) === 'string') {
 					localStorage.setItem('jwt', res.token)
-					//setToken(localStorage.getItem('jwt'));
-					//setLoggedIn(true)
+					setLoggedIn(true)
 					//setCurrentUser(res.user)
 					//setUserEmail(res.user.email)
-					checkToken()
+					//checkToken()
 				} else if (res.status === 401 || 400) {
 					setSuccessOrError(true)
 					setSuccessOrErrorMessage('Неверный пароль или емейл')
@@ -140,11 +142,11 @@ function App() {
 		const token = localStorage.getItem("jwt")
 		if (token) {
 			auth.validation(token)
-				.then((user) => {
-					//console.log(user)
-					setCurrentUser(user)
-					setToken(token)
+				.then(() => {
+					//setCurrentUser(user)
+					//setToken(token)
 					setLoggedIn(true);
+					//navigate('/')
 				})
 				.catch(() => {
 					setSuccessOrError(true)
@@ -192,6 +194,7 @@ function App() {
 	}
 
 	function handleCardLike(card) {
+		const token = localStorage.getItem("jwt")
 		const isLiked = card.likes.some(i => i === currentUser._id);
 		let apiMethod;
 		if (!isLiked) {
@@ -215,6 +218,7 @@ function App() {
 	}
 
 	function handleUpdateUser({ name, about }) {
+		const token = localStorage.getItem("jwt")
 		api.setUserInfo(name, about, token)
 			.then((res) => {
 				setCurrentUser(res)
@@ -224,8 +228,7 @@ function App() {
 	}
 
 	function handleUpdateAvatar({ avatar }) {
-
-
+		const token = localStorage.getItem("jwt")
 		api.setAvatar(avatar, token)
 			.then((res) => {
 				setCurrentUser(res)
@@ -235,6 +238,7 @@ function App() {
 	}
 
 	function handleAddNewCard({ name, link }) {
+		const token = localStorage.getItem("jwt")
 		api.setCard(name, link, token)
 			.then((res) => {
 				setCards([res, ...cards])

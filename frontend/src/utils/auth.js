@@ -43,7 +43,6 @@ export const validation = (token) => {
 		method: 'GET',
 		credentials: "include",
 		headers: {
-			Accept: "application/json",
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
