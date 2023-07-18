@@ -15,7 +15,7 @@ const {
   PORT,
   NODE_ENV,
   MESTO_DB,
-  DEFAULT_DB,
+  DEFAULT_DB = 'mongodb://localhost:27017/mesto-db-local',
 } = process.env;
 
 const app = express();
