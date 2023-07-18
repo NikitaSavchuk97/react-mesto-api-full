@@ -1,7 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
 
 const validateUrl = (url) => {
-  const regex = /^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?$/g;
+  const regex = /^https?:\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\\/~+#-]*[\w@?^=%&\\/~+#-])/im;
   if (regex.test(url)) {
     return url;
   }

@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://api-snv-project-mesto.ru';
 
-//http://localhost:3000
+//http://localhost:3001
 //https://api-snv-project-mesto.ru
 
 function dataServerAnswer(resolve) {
@@ -19,7 +19,7 @@ export const registration = (password, email) => {
 		body: JSON.stringify({ password, email })
 	})
 		.then((resolve) => {
-			return dataServerAnswer(resolve)
+			return dataServerAnswer(resolve) 
 		})
 }
 

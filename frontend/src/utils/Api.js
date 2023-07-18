@@ -62,7 +62,7 @@ class Api {
 				authorization: `Bearer ${token}`,
 				'Content-type': 'application/json'
 			},
-			body: JSON.stringify({
+			body: JSON.stringify({ 
 				name: name,
 				link: link,
 			})
@@ -111,7 +111,7 @@ const api = new Api({
 	baseUrl: 'https://api-snv-project-mesto.ru',
 })
 
-//http://localhost:3000
+//http://localhost:3001
 //https://api-snv-project-mesto.ru
 
 export default api;

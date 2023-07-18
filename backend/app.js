@@ -12,10 +12,10 @@ const serverError = require('./middlewares/serverError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const {
-	PORT = 3000,
-	NODE_ENV,
-	MESTO_DB,
-	DEFAULT_DB = 'mongodb://localhost:27017/mesto-db-local',
+  PORT,
+  NODE_ENV,
+  MESTO_DB,
+  DEFAULT_DB,
 } = process.env;
 
 const app = express();
@@ -30,12 +30,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 app.use(require('./routes/router'));
 
-
-
 app.use(errorLogger);
 app.use(errors());
 app.use(serverError);
 
 app.listen(PORT, () => {
-	console.log(`App listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });

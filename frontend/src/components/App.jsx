@@ -34,33 +34,7 @@ function App() {
 	const navigate = useNavigate();
 
 
-	/*
-	useEffect(() => {
-		if (loggedIn) {
-			api.getUserInfo(token)
-				.then((res) => {
-					setUserEmail(res.email)
-					setCurrentUser(res)
-				})
-				.catch((err) => {
-					console.log(`Устал искать что не так! Ошибка ${err}`);
-				});
-		}
-	}, [loggedIn, token]);
 
-	useEffect(() => {
-		if (loggedIn) {
-			api.getCards(token)
-				.then((res) => {
-					setCards(res)
-				})
-				.catch((err) => {
-					console.log(`Устал искать что не так! Ошибка ${err}`);
-				});
-		}
-	}, [loggedIn, token]);
-
-*/
 	useEffect(() => {
 		const token = localStorage.getItem("jwt")
 		if (loggedIn) {
@@ -72,13 +46,40 @@ function App() {
 					navigate('/');
 				})
 				.catch((err) => console.log(err));
-
 		}
 	}, [loggedIn])
 
+
+
+	/*
+
 	useEffect(() => {
-		checkToken();
-	}, []);
+		const token = localStorage.getItem("jwt")
+		if (loggedIn) {
+			api.getUserInfo(token)
+				.then((res) => {
+					setUserEmail(res.email)
+					setCurrentUser(res)
+				})
+				.catch((err) => {
+					console.log(`Устал искать что не так! Ошибка ${err}`);
+				});
+		}
+	}, [loggedIn]);
+
+		useEffect(() => {
+		const token = localStorage.getItem("jwt")
+		if (loggedIn) {
+			api.getCards(token)
+				.then((res) => {
+					setCards(res)
+				})
+				.catch((err) => {
+					console.log(`Устал искать что не так! Ошибка ${err}`);
+				});
+		}
+	}, [loggedIn]);
+	*/
 
 
 	function handleShowIllustrationClick(card) {
@@ -116,14 +117,14 @@ function App() {
 	}
 
 	function handleSubmitLogin({ password, email }) {
-		return auth.authorization(password, email)
+		auth.authorization(password, email)
 			.then((res) => {
 				if (typeof (res.token) === 'string') {
 					localStorage.setItem('jwt', res.token)
 					setLoggedIn(true)
 					//setCurrentUser(res.user)
 					//setUserEmail(res.user.email)
-					//checkToken()
+					checkToken()
 				} else if (res.status === 401 || 400) {
 					setSuccessOrError(true)
 					setSuccessOrErrorMessage('Неверный пароль или емейл')
@@ -268,10 +269,9 @@ function App() {
 					/>
 
 					<Route
-						exact
 						path="/"
 						element={
-							<ProtectedRoute loggiedIn={loggedIn}>
+							<ProtectedRoute loggedIn={loggedIn}>
 								<Main
 									cards={cards}
 									likeClick={handleCardLike}
