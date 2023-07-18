@@ -121,7 +121,7 @@ function App() {
 			.then((res) => {
 				if (typeof (res.token) === 'string') {
 					localStorage.setItem('jwt', res.token)
-					setLoggedIn(true)
+					//setLoggedIn(true)
 					//setCurrentUser(res.user)
 					//setUserEmail(res.user.email)
 					checkToken()
@@ -143,7 +143,8 @@ function App() {
 		const token = localStorage.getItem("jwt")
 		if (token) {
 			auth.validation(token)
-				.then(() => {
+				.then((user) => {
+					console.log(user)
 					//setCurrentUser(user)
 					//setToken(token)
 					setLoggedIn(true);
