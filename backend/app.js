@@ -12,7 +12,7 @@ const serverError = require('./middlewares/serverError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const {
-  PORT,
+  PORT = 3001,
   NODE_ENV,
   MESTO_DB,
   DEFAULT_DB = 'mongodb://localhost:27017/mesto-db-local',
