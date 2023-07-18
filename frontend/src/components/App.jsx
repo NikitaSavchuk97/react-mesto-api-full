@@ -76,6 +76,7 @@ function App() {
 	};
 
 	function logout() {
+		auth.logout()
 
 		setUserEmail('')
 		setLoggedIn(false)
