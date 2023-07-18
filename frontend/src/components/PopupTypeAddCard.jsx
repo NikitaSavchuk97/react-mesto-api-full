@@ -31,7 +31,7 @@ function PopupTypeAddCard({ open, close, onAddNewCard }) {
 		errors.link = '';
 		newCardTitleInput.current.value = '';
 		newCardUrlInput.current.value = '';
-	}, [open]);
+	}, [open,errors]);
 
 	return (
 		<PopupWithForm name='type_photo' title='Новое место' open={open} close={close} type='' submit={handleAddNewCard}>

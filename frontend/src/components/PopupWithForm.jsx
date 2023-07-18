@@ -19,7 +19,7 @@ function PopupWithForm({ name, title, open, close, children, type, submit }) {
 
 	useEffect(() => {
 		open && document.addEventListener('keydown', closeOnEsc);
-	}, []);
+	}, [open]);
 
 	return (
 		<div className={`popup popup_${name} ${open ? 'popup_active' : ''}`}>

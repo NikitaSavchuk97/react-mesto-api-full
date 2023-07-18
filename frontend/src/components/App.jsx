@@ -47,7 +47,7 @@ function App() {
 				})
 				.catch((err) => console.log(err));
 		}
-	}, [loggedIn])
+	}, [loggedIn,navigate])
 
 
 
@@ -143,8 +143,7 @@ function App() {
 		const token = localStorage.getItem("jwt")
 		if (token) {
 			auth.validation(token)
-				.then((user) => {
-					console.log(user)
+				.then(() => {
 					//setCurrentUser(user)
 					//setToken(token)
 					setLoggedIn(true);

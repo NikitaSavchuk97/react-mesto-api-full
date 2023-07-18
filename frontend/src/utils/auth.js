@@ -28,7 +28,7 @@ export const authorization = (password, email) => {
 		method: 'POST',
 		credentials: "include",
 		headers: {
-			'Accept': 'application/json',
+			'set-cookie': 'jwt=token; SameSite=None; Secure',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({ password, email }),
@@ -38,13 +38,14 @@ export const authorization = (password, email) => {
 		})
 }
 
-export const validation = (token) => {
+export const validation = () => {
 	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
 		credentials: "include",
 		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
+			'set-cookie': 'jwt=token; SameSite=None; Secure',
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
 		},
 	})
 		.then((resolve) => {

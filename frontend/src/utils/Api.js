@@ -3,23 +3,25 @@ class Api {
 		this._baseUrl = baseUrl;
 	}
 
-	getUserInfo(token) {
+	getUserInfo() {
 		return fetch(`${this._baseUrl}/users/me`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json",
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			}
 		}).then(this._dataServerAnswer)
 	}
 
-	setUserInfo(name, about, token) {
+	setUserInfo(name, about) {
 		return fetch(`${this._baseUrl}/users/me`, {
 			method: 'PATCH',
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({

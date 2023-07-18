@@ -15,7 +15,7 @@ function PopupTypeInfo({ open, close, onUpdateUser }) {
 		errors.job = '';
 		setName(currentUser.name)
 		setAbout(currentUser.about)
-	}, [currentUser, open]);
+	}, [currentUser, open,errors]);
 
 	function handleNameChange(evt) {
 		handleChange(evt)
