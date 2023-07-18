@@ -15,7 +15,7 @@ router.use(routerUsers);
 router.use(routerCards);
 
 router.get('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
+  res.clearCookie('jwt').send({ message: 'Выход пользователя из профиля прошел успешно' }).end();
 });
 
 router.use((req, res, next) => {

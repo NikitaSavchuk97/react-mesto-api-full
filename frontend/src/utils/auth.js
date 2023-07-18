@@ -53,3 +53,16 @@ export const validation = () => {
 		})
 }
 
+export const logout = () => {
+	return fetch(`${BASE_URL}/signout`, {
+		method: 'POST',
+		credentials: 'include',
+		headers: {
+			'set-cookie': 'jwt=token; SameSite=None; Secure',
+			'Content-Type': 'application/json'
+		}
+	})
+		.then((resolve) => {
+			return dataServerAnswer(resolve);
+		})
+}

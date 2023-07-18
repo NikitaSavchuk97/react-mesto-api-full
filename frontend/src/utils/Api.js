@@ -31,12 +31,13 @@ class Api {
 		}).then(this._dataServerAnswer)
 	}
 
-	setAvatar(avatar, token) {
+	setAvatar(avatar) {
 		return fetch(`${this._baseUrl}/users/me/avatar`, {
 			method: 'PATCH',
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
@@ -45,24 +46,26 @@ class Api {
 		}).then(this._dataServerAnswer)
 	}
 
-	getCards(token) {
+	getCards() {
 		return fetch(`${this._baseUrl}/cards`, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
-				Authorization: `Bearer ${token}`,
-				"Content-Type": "application/json",
-			}
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
 		}).then(this._dataServerAnswer)
 	}
 
-	setCard(name, link, token) {
+	setCard(name, link) {
 		return fetch(`${this._baseUrl}/cards`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
-				'Content-type': 'application/json'
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ 
 				name: name,
@@ -71,32 +74,38 @@ class Api {
 		}).then(this._dataServerAnswer)
 	}
 
-	deleteCard(id, token) {
+	deleteCard(id) {
 		return fetch(`${this._baseUrl}/cards/${id}`, {
 			method: 'DELETE',
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
-			}
-		}).then(this._dataServerAnswer)
-	}
-
-	likeCard(id, token) {
-		return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-			method: "PUT",
-			credentials: 'include',
-			headers: {
-				authorization: `Bearer ${token}`,
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 		}).then(this._dataServerAnswer)
 	}
 
-	dislikeCard(id, token) {
+	likeCard(id ) {
+		return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+			method: "PUT",
+			credentials: 'include',
+			headers: {
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+		}).then(this._dataServerAnswer)
+	}
+
+	dislikeCard(id ) {
 		return fetch(`${this._baseUrl}/cards/${id}/likes`, {
 			method: "DELETE",
 			credentials: 'include',
 			headers: {
-				authorization: `Bearer ${token}`,
+				'set-cookie': 'jwt=token; SameSite=None; Secure',
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 		}).then(this._dataServerAnswer)
 	}

@@ -36,9 +36,8 @@ function App() {
 
 
 	useEffect(() => {
-		const token = localStorage.getItem("jwt")
 		if (loggedIn) {
-			Promise.all([api.getUserInfo(token), api.getCards(token)])
+			Promise.all([api.getUserInfo(), api.getCards()])
 				.then(([user, cards]) => {
 					setCurrentUser(user);
 					setUserEmail(user.email);
@@ -48,39 +47,6 @@ function App() {
 				.catch((err) => console.log(err));
 		}
 	}, [loggedIn,navigate])
-
-
-
-	/*
-
-	useEffect(() => {
-		const token = localStorage.getItem("jwt")
-		if (loggedIn) {
-			api.getUserInfo(token)
-				.then((res) => {
-					setUserEmail(res.email)
-					setCurrentUser(res)
-				})
-				.catch((err) => {
-					console.log(`Устал искать что не так! Ошибка ${err}`);
-				});
-		}
-	}, [loggedIn]);
-
-		useEffect(() => {
-		const token = localStorage.getItem("jwt")
-		if (loggedIn) {
-			api.getCards(token)
-				.then((res) => {
-					setCards(res)
-				})
-				.catch((err) => {
-					console.log(`Устал искать что не так! Ошибка ${err}`);
-				});
-		}
-	}, [loggedIn]);
-	*/
-
 
 	function handleShowIllustrationClick(card) {
 		setSelectedCard(card)
@@ -110,7 +76,6 @@ function App() {
 	};
 
 	function logout() {
-		localStorage.removeItem('jwt')
 
 		setUserEmail('')
 		setLoggedIn(false)
@@ -219,8 +184,7 @@ function App() {
 	}
 
 	function handleUpdateUser({ name, about }) {
-		const token = localStorage.getItem("jwt")
-		api.setUserInfo(name, about, token)
+		api.setUserInfo(name, about)
 			.then((res) => {
 				setCurrentUser(res)
 				closeThisPopup()
@@ -229,8 +193,7 @@ function App() {
 	}
 
 	function handleUpdateAvatar({ avatar }) {
-		const token = localStorage.getItem("jwt")
-		api.setAvatar(avatar, token)
+		api.setAvatar(avatar)
 			.then((res) => {
 				setCurrentUser(res)
 				closeThisPopup()
@@ -239,8 +202,7 @@ function App() {
 	}
 
 	function handleAddNewCard({ name, link }) {
-		const token = localStorage.getItem("jwt")
-		api.setCard(name, link, token)
+		api.setCard(name, link)
 			.then((res) => {
 				setCards([res, ...cards])
 				closeThisPopup()

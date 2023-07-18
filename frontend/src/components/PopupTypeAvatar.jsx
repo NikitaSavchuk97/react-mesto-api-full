@@ -21,7 +21,7 @@ function PopupTypeAvatar({ open, close, onUpdateAvatar }) {
 	useEffect(() => {
 		errors.avatar = ''
 		avatarInput.current.value = '';
-	}, [open,errors])
+	}, [open])
 
 	return (
 		<PopupWithForm name='type_avatar' title='Обновить аватар' open={open} close={close} type='popup__container_type_avatar' submit={handleAvatarChange} >
